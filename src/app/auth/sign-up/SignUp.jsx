@@ -14,12 +14,20 @@ import Loader from '@/app/components/Loader/Loader';
 const SignUp = () => {
   const [showLoader, setShowLoader] = useState(false);
   const [modalContent, setModalContent] = useState({});
+
   const onSubmit = async (event) => {
     setShowLoader(true);
     event.preventDefault();
 
     try {
-      await signUpUser(event.target.email.value, event.target.password.value);
+      await signUpUser(
+        event.target.firstName.value,
+        event.target.lastName.value,
+        event.target.email.value,
+        event.target.password.value,
+        event.target.dob.value,
+        event.target.gender.value
+      );
       setModalContent({
         title: MODAL_LABELS.SUCCESS.TITLE,
         body: MODAL_LABELS.SUCCESS.BODY,
@@ -29,10 +37,7 @@ const SignUp = () => {
       });
     } catch (error) {
       const errorMessage = error.message
-        .substring(
-          error.message.indexOf('/') + 1,
-          error.message.lastIndexOf(')')
-        )
+        .substring(error.message.indexOf('/') + 1, error.message.lastIndexOf(')'))
         .replaceAll('-', ' ');
       setModalContent({
         title: MODAL_LABELS.ERROR.TITLE,
@@ -117,12 +122,7 @@ const SignUp = () => {
         </Form>
       </div>
       {!isEmpty(modalContent) && (
-        <Modal
-          backdrop='static'
-          className='sign-up__success-modal'
-          centered
-          show
-        >
+        <Modal backdrop='static' className='sign-up__success-modal' centered show>
           <Modal.Header>
             <Modal.Title>{modalContent.title}</Modal.Title>
           </Modal.Header>

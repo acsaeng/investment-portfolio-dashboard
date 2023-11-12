@@ -8,12 +8,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { signInUser, signOutUser } from '@/utils/auth';
 import PAGE from '@/common/routes';
 import CompanyLogo from '../../../img/logo.jpg';
-import {
-  FORM_FIELDS,
-  FORM_LABELS,
-  LOGO_IMAGE_ALT,
-  MODAL_LABELS,
-} from './constants';
+import { FORM_FIELDS, FORM_LABELS, LOGO_IMAGE_ALT, MODAL_LABELS } from './constants';
 
 import './SignIn.scss';
 import Loader from '@/app/components/Loader/Loader';
@@ -28,10 +23,8 @@ const SignIn = () => {
     event.preventDefault();
 
     try {
-      if (
-        await signInUser(event.target.email.value, event.target.password.value)
-      ) {
-        router.push(PAGE.HOME);
+      if (await signInUser(event.target.email.value, event.target.password.value)) {
+        router.push(PAGE.DASHBOARD);
       }
     } catch (error) {
       setShowLoader(false);
@@ -47,13 +40,7 @@ const SignIn = () => {
     <div className='sign-in'>
       <Loader isVisible={showLoader} />
       <div className='sign-in__container'>
-        <Image
-          alt={LOGO_IMAGE_ALT}
-          className='sign-in__logo'
-          placeholder='blur'
-          quality={100}
-          src={CompanyLogo}
-        />
+        <Image alt={LOGO_IMAGE_ALT} className='sign-in__logo' placeholder='blur' quality={100} src={CompanyLogo} />
         <h2 className='sign-in__title'>{FORM_LABELS.FORM_HEADER}</h2>
         <Form className='sign-in__form' onSubmit={onSignIn}>
           <Form.Control
@@ -76,10 +63,7 @@ const SignIn = () => {
                 {FORM_LABELS.SIGN_UP_LABEL}
               </Link>
               <span className='sign-in__delimiter'>·</span>
-              <Link
-                className='sign-in__account-link'
-                href={PAGE.FORGOT_PASSWORD}
-              >
+              <Link className='sign-in__account-link' href={PAGE.FORGOT_PASSWORD}>
                 {FORM_LABELS.FORGOT_PASSWORD_LABEL}
               </Link>
             </div>
@@ -89,12 +73,7 @@ const SignIn = () => {
           </div>
         </Form>
       </div>
-      <Modal
-        backdrop='static'
-        className='sign-in__error-modal'
-        centered
-        show={showErrorModal}
-      >
+      <Modal backdrop='static' className='sign-in__error-modal' centered show={showErrorModal}>
         <Modal.Header>
           <Modal.Title>{MODAL_LABELS.TITLE}</Modal.Title>
         </Modal.Header>
@@ -102,9 +81,7 @@ const SignIn = () => {
           <p>{MODAL_LABELS.BODY}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => setShowErrorModal(false)}>
-            {MODAL_LABELS.BUTTON}
-          </Button>
+          <Button onClick={() => setShowErrorModal(false)}>{MODAL_LABELS.BUTTON}</Button>
         </Modal.Footer>
       </Modal>
     </div>

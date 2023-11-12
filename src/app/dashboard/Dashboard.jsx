@@ -9,9 +9,9 @@ import { Container, Navbar } from 'react-bootstrap';
 import { signOutUser } from '@/utils/auth';
 import PAGE from '@/common/routes';
 
-import './Home.scss';
+import './Dashboard.scss';
 
-const Home = () => {
+const Dashboard = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const router = useRouter();
 
@@ -32,12 +32,12 @@ const Home = () => {
 
   return (
     isAuthorized && (
-      <div className='home'>
-        <Navbar className='home__navbar'>
+      <div className='dashboard'>
+        <Navbar className='dashboard'>
           <Container>
-            <Navbar.Brand href={PAGE.HOME}>Company name</Navbar.Brand>
+            <Navbar.Brand href={PAGE.DASHBOARD}>Company name</Navbar.Brand>
             <Navbar.Toggle />
-            <Navbar.Collapse className='home__navbar-collapse'>
+            <Navbar.Collapse className='dashboard-collapse'>
               <Navbar.Text>
                 <Link href={PAGE.SIGN_IN} onClick={() => onSignOut()}>
                   Sign out
@@ -51,4 +51,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

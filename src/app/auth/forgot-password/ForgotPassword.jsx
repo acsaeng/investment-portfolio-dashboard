@@ -5,18 +5,13 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { resetPassword } from '@/utils/auth';
-import PAGE from '@/common/routes';
+import Loader from '@/app/components/Loader';
+import { resetPassword } from '@/api/auth';
+import PAGE from '@/utils/routes';
 import CompanyLogo from '../../../img/logo.jpg';
-import {
-  EMAIL_FORM_FIELDS,
-  FORM_LABELS,
-  LOGO_IMAGE_ALT,
-  MODAL_LABELS,
-} from './constants';
+import { EMAIL_FORM_FIELDS, FORM_LABELS, LOGO_IMAGE_ALT, MODAL_LABELS } from './constants';
 
 import './ForgotPassword.scss';
-import Loader from '@/app/components/Loader/Loader';
 
 const ForgotPassword = () => {
   const [showLoader, setShowLoader] = useState(false);
@@ -64,12 +59,7 @@ const ForgotPassword = () => {
           </Button>
         </Form>
       </div>
-      <Modal
-        backdrop='static'
-        className='forgot-password__confirmation-modal'
-        centered
-        show={showSuccessModal}
-      >
+      <Modal backdrop='static' className='forgot-password__confirmation-modal' centered show={showSuccessModal}>
         <Modal.Header>
           <Modal.Title>{MODAL_LABELS.TITLE}</Modal.Title>
         </Modal.Header>
@@ -77,9 +67,7 @@ const ForgotPassword = () => {
           <p>{MODAL_LABELS.BODY}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => router.push(PAGE.SIGN_IN)}>
-            {MODAL_LABELS.BUTTON}
-          </Button>
+          <Button onClick={() => router.push(PAGE.SIGN_IN)}>{MODAL_LABELS.BUTTON}</Button>
         </Modal.Footer>
       </Modal>
     </div>

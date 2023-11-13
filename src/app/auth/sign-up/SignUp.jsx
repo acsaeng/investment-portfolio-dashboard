@@ -4,12 +4,12 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { isEmpty } from 'lodash';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { signOutUser, signUpUser } from '@/utils/auth';
-import PAGE from '@/common/routes';
+import Loader from '@/app/components/Loader/Loader';
+import { signOutUser, signUpUser } from '@/api/auth';
+import PAGE from '@/utils/routes';
 import { FORM_FIELDS, FORM_LABELS, MODAL_LABELS } from './constants';
 
 import './SignUp.scss';
-import Loader from '@/app/components/Loader/Loader';
 
 const SignUp = () => {
   const [showLoader, setShowLoader] = useState(false);
@@ -41,7 +41,9 @@ const SignUp = () => {
         .replaceAll('-', ' ');
       setModalContent({
         title: MODAL_LABELS.ERROR.TITLE,
-        body: errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1),
+        body: errorMessage
+          ? errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1)
+          : MODAL_LABELS.ERROR.DEFAULT_BODY,
         button: MODAL_LABELS.ERROR.BUTTON,
         buttonEvent: () => setModalContent({}),
         href: null,

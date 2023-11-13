@@ -5,13 +5,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { signInUser, signOutUser } from '@/utils/auth';
-import PAGE from '@/common/routes';
+import Loader from '@/app/components/Loader';
+import { signInUser, signOutUser } from '@/api/auth';
+import PAGE from '@/utils/routes';
 import CompanyLogo from '../../../img/logo.jpg';
 import { FORM_FIELDS, FORM_LABELS, LOGO_IMAGE_ALT, MODAL_LABELS } from './constants';
 
 import './SignIn.scss';
-import Loader from '@/app/components/Loader/Loader';
 
 const SignIn = () => {
   const [showLoader, setShowLoader] = useState(false);

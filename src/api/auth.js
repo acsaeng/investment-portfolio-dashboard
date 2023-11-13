@@ -6,20 +6,18 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import { doc, getFirestore, setDoc } from 'firebase/firestore';
+import { COLLECTIONS } from '../utils/database';
 
 const signUpUser = async (firstName, lastName, email, password, dob, gender) => {
-  const database = getFirestore();
-  console.log('firstName', firstName);
-  await addDoc(collection(database, 'users'), {
+  await createUserWithEmailAndPassword(auth, email, password);
+  await setDoc(doc(getFirestore(), COLLECTIONS.USER, auth.currentUser.uid), {
     firstName,
     lastName,
     email,
     dob,
     gender,
   });
-
-  await createUserWithEmailAndPassword(auth, email, password);
   await sendEmailVerification(auth.currentUser);
 };
 

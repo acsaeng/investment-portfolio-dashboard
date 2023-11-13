@@ -11,7 +11,7 @@ import { COLLECTIONS } from '../utils/database';
 
 const signUpUser = async (firstName, lastName, email, password, dob, gender) => {
   await createUserWithEmailAndPassword(auth, email, password);
-  await setDoc(doc(getFirestore(), COLLECTIONS.USER, auth.currentUser.uid), {
+  await setDoc(doc(getFirestore(), COLLECTIONS.USERS, auth.currentUser.uid), {
     firstName,
     lastName,
     email,

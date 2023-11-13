@@ -50,6 +50,7 @@ export const MODAL_LABELS = {
   },
   ERROR: {
     TITLE: 'Error',
+    DEFAULT_BODY: 'An error occurred.',
     BUTTON: 'Continue',
   },
 };

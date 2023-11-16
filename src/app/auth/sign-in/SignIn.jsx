@@ -10,7 +10,6 @@ import { signInUser, signOutUser } from '@/api/auth';
 import PAGE from '@/utils/routes';
 import CompanyLogo from '../../../img/logo.jpg';
 import { FORM_FIELDS, FORM_LABELS, LOGO_IMAGE_ALT, MODAL_LABELS } from './constants';
-
 import './SignIn.scss';
 
 const SignIn = () => {

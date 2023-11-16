@@ -1,0 +1,11 @@
+@import '../../../scss/base-import';
+
+.navbar {
+  width: 100%;
+  margin-bottom: 20px;
+  background-color: lightgrey;
+
+  &__collapse {
+    justify-content: end;
+  }
+}

@@ -1,0 +1,21 @@
+@import '../../../scss/base-import';
+
+.assets-table {
+  display: flex;
+  flex-direction: column;
+  width: 800px !important;
+
+  &__title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 8px 10px;
+  }
+
+  &__header--symbol {
+    padding: 0 50px !important;
+  }
+
+  &__no-data-response {
+    padding: 20px 0 20px 20px !important;
+  }
+}

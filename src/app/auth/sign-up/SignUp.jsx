@@ -2,18 +2,20 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { isEmpty } from 'lodash';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import Loader from '@/app/components/Loader/Loader';
+import Modal from '@/app/components/Modal';
 import { signOutUser, signUpUser } from '@/api/auth';
 import PAGE from '@/utils/routes';
-import { FORM_FIELDS, FORM_LABELS, MODAL_LABELS } from './constants';
-
+import { FORM_FIELD, FORM_LABEL, MODAL_LABEL } from './constants';
 import './SignUp.scss';
 
 const SignUp = () => {
   const [showLoader, setShowLoader] = useState(false);
   const [modalContent, setModalContent] = useState({});
+  const router = useRouter();
 
   const onSubmit = async (event) => {
     setShowLoader(true);
@@ -29,22 +31,21 @@ const SignUp = () => {
         event.target.gender.value
       );
       setModalContent({
-        title: MODAL_LABELS.SUCCESS.TITLE,
-        body: MODAL_LABELS.SUCCESS.BODY,
-        button: MODAL_LABELS.SUCCESS.BUTTON,
-        buttonEvent: null,
-        href: PAGE.SIGN_IN,
+        title: MODAL_LABEL.SUCCESS.TITLE,
+        body: MODAL_LABEL.SUCCESS.BODY,
+        button: MODAL_LABEL.SUCCESS.BUTTON,
+        buttonEvent: () => router.push(PAGE.SIGN_IN),
       });
     } catch (error) {
       const errorMessage = error.message
         .substring(error.message.indexOf('/') + 1, error.message.lastIndexOf(')'))
         .replaceAll('-', ' ');
       setModalContent({
-        title: MODAL_LABELS.ERROR.TITLE,
+        title: MODAL_LABEL.ERROR.TITLE,
         body: errorMessage
           ? errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1)
-          : MODAL_LABELS.ERROR.DEFAULT_BODY,
-        button: MODAL_LABELS.ERROR.BUTTON,
+          : MODAL_LABEL.ERROR.DEFAULT_BODY,
+        button: MODAL_LABEL.ERROR.BUTTON,
         buttonEvent: () => setModalContent({}),
         href: null,
       });
@@ -61,83 +62,76 @@ const SignUp = () => {
     <div className='sign-up'>
       <Loader isVisible={showLoader} />
       <div className='sign-up__container'>
-        <Link className='sign-up__back-button' href={PAGE.FORGOT_PASSWORD}>
-          {FORM_LABELS.BACK_LINK}
+        <Link className='sign-up__back-button' href={PAGE.SIGN_IN}>
+          {FORM_LABEL.BACK_LINK}
         </Link>
-        <h6 className='sign-up__header'>{FORM_LABELS.FORM_HEADER}</h6>
+        <h6 className='sign-up__header'>{FORM_LABEL.FORM_HEADER}</h6>
         <Form className='sign-up__form' onSubmit={onSubmit}>
           <div className='sign-up__name-inputs-container'>
             <Form.Control
               className='sign-up__first-name-input'
-              maxLength={FORM_FIELDS.FIRST_NAME.maxLength}
-              name={FORM_FIELDS.FIRST_NAME.name}
-              placeholder={FORM_FIELDS.FIRST_NAME.label}
+              maxLength={FORM_FIELD.FIRST_NAME.maxLength}
+              name={FORM_FIELD.FIRST_NAME.name}
+              placeholder={FORM_FIELD.FIRST_NAME.label}
               required
             />
             <Form.Control
               className='sign-up__last-name-input'
-              maxLength={FORM_FIELDS.LAST_NAME.maxLength}
-              name={FORM_FIELDS.LAST_NAME.name}
-              placeholder={FORM_FIELDS.LAST_NAME.label}
+              maxLength={FORM_FIELD.LAST_NAME.maxLength}
+              name={FORM_FIELD.LAST_NAME.name}
+              placeholder={FORM_FIELD.LAST_NAME.label}
               required
             />
           </div>
           <Form.Control
             className='sign-up__email-input'
-            maxLength={FORM_FIELDS.EMAIL.maxLength}
-            name={FORM_FIELDS.EMAIL.name}
-            placeholder={FORM_FIELDS.EMAIL.label}
+            maxLength={FORM_FIELD.EMAIL.maxLength}
+            name={FORM_FIELD.EMAIL.name}
+            placeholder={FORM_FIELD.EMAIL.label}
             required
-            type={FORM_FIELDS.EMAIL.type}
+            type={FORM_FIELD.EMAIL.type}
           />
           <Form.Control
             className='sign-up__password-input'
-            name={FORM_FIELDS.PASSWORD.name}
-            // pattern={FORM_FIELDS.PASSWORD.pattern}
-            title={FORM_FIELDS.PASSWORD.title}
-            placeholder={FORM_FIELDS.PASSWORD.label}
+            name={FORM_FIELD.PASSWORD.name}
+            // pattern={FORM_FIELD.PASSWORD.pattern}
+            title={FORM_FIELD.PASSWORD.title}
+            placeholder={FORM_FIELD.PASSWORD.label}
             required
-            type={FORM_FIELDS.PASSWORD.type}
+            type={FORM_FIELD.PASSWORD.type}
           />
           <Form.Control
             className='sign-up__dob-input'
-            name={FORM_FIELDS.DOB.name}
-            placeholder={FORM_FIELDS.DOB.label}
+            name={FORM_FIELD.DOB.name}
+            placeholder={FORM_FIELD.DOB.label}
             required
-            type={FORM_FIELDS.DOB.type}
+            type={FORM_FIELD.DOB.type}
           />
           <Form.Select
             className='sign-up__gender-input'
-            name={FORM_FIELDS.GENDER.name}
-            placeholder={FORM_FIELDS.GENDER.label}
+            name={FORM_FIELD.GENDER.name}
+            placeholder={FORM_FIELD.GENDER.label}
             required
           >
-            {FORM_FIELDS.GENDER.options.map((gender) => (
+            {FORM_FIELD.GENDER.options.map((gender) => (
               <option key={gender} value={gender}>
                 {gender}
               </option>
             ))}
           </Form.Select>
           <Button className='sign-up__submit-button' type='submit'>
-            {FORM_LABELS.SUBMIT_BUTTON}
+            {FORM_LABEL.SUBMIT_BUTTON}
           </Button>
         </Form>
       </div>
-      {!isEmpty(modalContent) && (
-        <Modal backdrop='static' className='sign-up__success-modal' centered show>
-          <Modal.Header>
-            <Modal.Title>{modalContent.title}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>{modalContent.body}</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={modalContent.buttonEvent} href={modalContent.href}>
-              {modalContent.button}
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      )}
+      <Modal
+        buttonLabel={modalContent.button}
+        isVisible={!isEmpty(modalContent)}
+        onButtonClick={modalContent.buttonEvent}
+        title={modalContent.title}
+      >
+        {modalContent.body}
+      </Modal>
     </div>
   );
 };

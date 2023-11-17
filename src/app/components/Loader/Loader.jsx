@@ -4,7 +4,7 @@ import { Spinner } from 'react-bootstrap';
 
 import './Loader.scss';
 
-const Loader = ({ isVisible }) =>
+const Loader = ({ isVisible = true }) =>
   isVisible && (
     <div className='loader'>
       <Spinner animation='border' className='loader__spinner' variant='light' />

@@ -1,4 +1,10 @@
-export const FORM_FIELDS = {
+const FORM_LABEL = {
+  FORM_HEADER: 'Please enter your information below',
+  BACK_LINK: '< Back',
+  SUBMIT_BUTTON: 'Sign Up',
+};
+
+const FORM_FIELD = {
   FIRST_NAME: {
     label: 'First name',
     maxLength: 15,
@@ -36,13 +42,7 @@ export const FORM_FIELDS = {
   },
 };
 
-export const FORM_LABELS = {
-  FORM_HEADER: 'Please enter your information below',
-  BACK_LINK: '< Back',
-  SUBMIT_BUTTON: 'Sign Up',
-};
-
-export const MODAL_LABELS = {
+const MODAL_LABEL = {
   SUCCESS: {
     TITLE: 'Account created!',
     BODY: 'A verification link has been sent to your email.',
@@ -54,3 +54,5 @@ export const MODAL_LABELS = {
     BUTTON: 'Continue',
   },
 };
+
+export { FORM_FIELD, FORM_LABEL, MODAL_LABEL };

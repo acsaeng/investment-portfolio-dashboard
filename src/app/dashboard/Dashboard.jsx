@@ -43,7 +43,7 @@ const Dashboard = () => {
             <AssetsTable userAssets={userPortfolio.assets} />
           </>
         ) : (
-          <Loader isVisible />
+          <Loader />
         )}
       </div>
     )

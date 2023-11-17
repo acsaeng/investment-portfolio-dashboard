@@ -4,12 +4,13 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import Loader from '@/app/components/Loader';
 import { signInUser, signOutUser } from '@/api/auth';
+import Modal from '@/app/components/Modal';
 import PAGE from '@/utils/routes';
 import CompanyLogo from '../../../img/logo.jpg';
-import { FORM_FIELDS, FORM_LABELS, LOGO_IMAGE_ALT, MODAL_LABELS } from './constants';
+import { FORM_FIELD, FORM_LABEL, LOGO_IMAGE_ALT, MODAL_LABEL } from './constants';
 import './SignIn.scss';
 
 const SignIn = () => {
@@ -40,48 +41,45 @@ const SignIn = () => {
       <Loader isVisible={showLoader} />
       <div className='sign-in__container'>
         <Image alt={LOGO_IMAGE_ALT} className='sign-in__logo' placeholder='blur' quality={100} src={CompanyLogo} />
-        <h2 className='sign-in__title'>{FORM_LABELS.FORM_HEADER}</h2>
+        <h2 className='sign-in__title'>{FORM_LABEL.FORM_HEADER}</h2>
         <Form className='sign-in__form' onSubmit={onSignIn}>
           <Form.Control
             className='sign-in__input'
-            name={FORM_FIELDS.EMAIL.name}
-            placeholder={FORM_FIELDS.EMAIL.label}
+            name={FORM_FIELD.EMAIL.name}
+            placeholder={FORM_FIELD.EMAIL.label}
             required
-            type={FORM_FIELDS.EMAIL.type}
+            type={FORM_FIELD.EMAIL.type}
           />
           <Form.Control
             className='sign-in__input'
-            name={FORM_FIELDS.PASSWORD.name}
-            placeholder={FORM_FIELDS.PASSWORD.label}
+            name={FORM_FIELD.PASSWORD.name}
+            placeholder={FORM_FIELD.PASSWORD.label}
             required
-            type={FORM_FIELDS.PASSWORD.type}
+            type={FORM_FIELD.PASSWORD.type}
           />
           <div className='sign-in__message-and-ctas-container'>
             <div className='sign-in__links-container'>
               <Link className='sign-in__account-link' href={PAGE.SIGN_UP}>
-                {FORM_LABELS.SIGN_UP_LABEL}
+                {FORM_LABEL.SIGN_UP_LABEL}
               </Link>
               <span className='sign-in__delimiter'>·</span>
               <Link className='sign-in__account-link' href={PAGE.FORGOT_PASSWORD}>
-                {FORM_LABELS.FORGOT_PASSWORD_LABEL}
+                {FORM_LABEL.FORGOT_PASSWORD_LABEL}
               </Link>
             </div>
             <Button className='sign-in__sign-in-button' type='submit'>
-              {FORM_LABELS.SUBMIT_BUTTON_LABEL}
+              {FORM_LABEL.SUBMIT_BUTTON_LABEL}
             </Button>
           </div>
         </Form>
       </div>
-      <Modal backdrop='static' className='sign-in__error-modal' centered show={showErrorModal}>
-        <Modal.Header>
-          <Modal.Title>{MODAL_LABELS.TITLE}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>{MODAL_LABELS.BODY}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => setShowErrorModal(false)}>{MODAL_LABELS.BUTTON}</Button>
-        </Modal.Footer>
+      <Modal
+        buttonLabel={MODAL_LABEL.BUTTON}
+        isVisible={showErrorModal}
+        onButtonClick={() => setShowErrorModal(false)}
+        title={MODAL_LABEL.TITLE}
+      >
+        {MODAL_LABEL.BODY}
       </Modal>
     </div>
   );

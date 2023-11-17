@@ -1,4 +1,13 @@
-export const FORM_FIELDS = {
+const LOGO_IMAGE_ALT = 'Company logo';
+
+const FORM_LABEL = {
+  FORM_HEADER: 'Sign In',
+  SIGN_UP_LABEL: 'Sign up',
+  FORGOT_PASSWORD_LABEL: 'Forgot password?',
+  SUBMIT_BUTTON_LABEL: 'Sign In',
+};
+
+const FORM_FIELD = {
   EMAIL: {
     label: 'Email address',
     maxLength: 100,
@@ -12,17 +21,10 @@ export const FORM_FIELDS = {
   },
 };
 
-export const FORM_LABELS = {
-  FORM_HEADER: 'Sign In',
-  SIGN_UP_LABEL: 'Sign up',
-  FORGOT_PASSWORD_LABEL: 'Forgot password?',
-  SUBMIT_BUTTON_LABEL: 'Sign In',
-};
-
-export const LOGO_IMAGE_ALT = 'Company logo';
-
-export const MODAL_LABELS = {
+const MODAL_LABEL = {
   TITLE: 'Error',
   BODY: 'The email address or password is invalid',
   BUTTON: 'Continue',
 };
+
+export { FORM_FIELD, FORM_LABEL, LOGO_IMAGE_ALT, MODAL_LABEL };

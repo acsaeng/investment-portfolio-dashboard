@@ -14,7 +14,7 @@ const EMAIL_FORM_FIELD = {
 };
 
 const MODAL_LABEL = {
-  TITLE: 'Confirmation email sent',
+  HEADER: 'Confirmation email sent',
   BODY: 'A recovery link has been sent to your email.',
   BUTTON: 'Sign In',
 };

@@ -22,7 +22,7 @@ const FORM_FIELD = {
 };
 
 const MODAL_LABEL = {
-  TITLE: 'Error',
+  HEADER: 'Error',
   BODY: 'The email address or password is invalid',
   BUTTON: 'Continue',
 };

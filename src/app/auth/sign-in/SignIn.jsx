@@ -75,9 +75,9 @@ const SignIn = () => {
       </div>
       <Modal
         buttonLabel={MODAL_LABEL.BUTTON}
+        header={MODAL_LABEL.HEADER}
         isVisible={showErrorModal}
         onButtonClick={() => setShowErrorModal(false)}
-        title={MODAL_LABEL.TITLE}
       >
         {MODAL_LABEL.BODY}
       </Modal>

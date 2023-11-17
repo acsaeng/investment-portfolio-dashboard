@@ -44,12 +44,12 @@ const FORM_FIELD = {
 
 const MODAL_LABEL = {
   SUCCESS: {
-    TITLE: 'Account created!',
+    HEADER: 'Account created!',
     BODY: 'A verification link has been sent to your email.',
     BUTTON: 'Sign In',
   },
   ERROR: {
-    TITLE: 'Error',
+    HEADER: 'Error',
     DEFAULT_BODY: 'An error occurred.',
     BUTTON: 'Continue',
   },

@@ -61,9 +61,9 @@ const ForgotPassword = () => {
       </div>
       <Modal
         buttonLabel={MODAL_LABEL.BUTTON}
+        header={MODAL_LABEL.HEADER}
         isVisible={showSuccessModal}
         onButtonClick={() => router.push(PAGE.SIGN_IN)}
-        title={MODAL_LABEL.TITLE}
       >
         {MODAL_LABEL.BODY}
       </Modal>

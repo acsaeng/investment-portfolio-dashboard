@@ -60,10 +60,10 @@ const ForgotPassword = () => {
         </Form>
       </div>
       <Modal
+        buttonAttributes={{ onClick: () => router.push(PAGE.SIGN_IN) }}
         buttonLabel={MODAL_LABEL.BUTTON}
-        header={MODAL_LABEL.HEADER}
         isVisible={showSuccessModal}
-        onButtonClick={() => router.push(PAGE.SIGN_IN)}
+        title={MODAL_LABEL.TITLE}
       >
         {MODAL_LABEL.BODY}
       </Modal>

@@ -31,7 +31,7 @@ const SignUp = () => {
         event.target.gender.value
       );
       setModalContent({
-        header: MODAL_LABEL.SUCCESS.HEADER,
+        title: MODAL_LABEL.SUCCESS.TITLE,
         body: MODAL_LABEL.SUCCESS.BODY,
         button: MODAL_LABEL.SUCCESS.BUTTON,
         buttonEvent: () => router.push(PAGE.SIGN_IN),
@@ -41,7 +41,7 @@ const SignUp = () => {
         .substring(error.message.indexOf('/') + 1, error.message.lastIndexOf(')'))
         .replaceAll('-', ' ');
       setModalContent({
-        header: MODAL_LABEL.ERROR.HEADER,
+        title: MODAL_LABEL.ERROR.TITLE,
         body: errorMessage
           ? errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1)
           : MODAL_LABEL.ERROR.DEFAULT_BODY,
@@ -124,14 +124,15 @@ const SignUp = () => {
           </Button>
         </Form>
       </div>
-      <Modal
-        buttonLabel={modalContent.button}
-        header={modalContent.header}
-        isVisible={!isEmpty(modalContent)}
-        onButtonClick={modalContent.buttonEvent}
-      >
-        {modalContent.body}
-      </Modal>
+      {!isEmpty(modalContent) && (
+        <Modal
+          buttonAttributes={{ onClick: modalContent.buttonEvent }}
+          buttonLabel={modalContent.button}
+          title={modalContent.title}
+        >
+          {modalContent.body}
+        </Modal>
+      )}
     </div>
   );
 };

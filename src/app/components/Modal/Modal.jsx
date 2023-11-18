@@ -12,7 +12,7 @@ const Modal = ({
   title = '',
 }) => (
   <BootstrapModal backdrop='static' className='modal' centered onHide={onHide} show={isVisible}>
-    {title && (
+    {(title || closeButton) && (
       <BootstrapModal.Header closeButton={closeButton}>
         <BootstrapModal.Title>{title}</BootstrapModal.Title>
       </BootstrapModal.Header>

@@ -14,14 +14,14 @@ import './Dashboard.scss';
 
 const Dashboard = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [userPortfolio, setUserPorfoliio] = useState({});
+  const [userPortfolio, setUserPortfolio] = useState({});
   const router = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         setIsAuthorized(true);
-        setUserPorfoliio(await getUserPortfolioData());
+        setUserPortfolio(await getUserPortfolioData());
       } else {
         router.push(PAGE.SIGN_IN);
       }
@@ -40,7 +40,7 @@ const Dashboard = () => {
                 userPortfolio.returnPct
               }) ${userPortfolio.isNetGain ? 'gain' : 'loss'}`}</span>
             </div>
-            <AssetsTable userAssets={userPortfolio.assets} />
+            <AssetsTable setUserPortfolio={setUserPortfolio} userAssets={userPortfolio.assets} />
           </>
         ) : (
           <Loader />

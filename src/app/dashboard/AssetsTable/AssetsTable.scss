@@ -5,17 +5,47 @@
   flex-direction: column;
   width: 800px !important;
 
+  &__header {
+    display: flex;
+    margin-bottom: 10px;
+  }
+
   &__title {
     font-size: 18px;
     font-weight: bold;
-    margin: 0 8px 10px;
   }
 
-  &__header--symbol {
+  &__add-asset-button {
+    margin-left: auto;
+  }
+
+  &__heading--symbol {
     padding: 0 50px !important;
   }
 
   &__no-data-response {
     padding: 20px 0 20px 20px !important;
   }
+
+  &__asset-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__asset-form-input {
+    width: 300px !important;
+    margin-bottom: 10px;
+  }
+}
+
+// Remove arrows from number input
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
 }

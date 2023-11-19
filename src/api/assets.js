@@ -1,43 +1,23 @@
 import { auth, database } from '@/config/firebase';
+import { addDoc, collection, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { isEmpty } from 'lodash';
 import { FINANCIAL_MODELING_PREP_ENDPOINT, FIREBASE_COLLECTIONS } from '@/utils/endpoints';
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 
 const getUserPortfolioData = async () => {
-  const assetsRef = collection(database, FIREBASE_COLLECTIONS.ASSETS);
-  console.log('currentUser', auth.currentUser);
-  const assetsQuery = query(assetsRef, where('userUid', '==', auth.currentUser.uid), orderBy('symbol', 'asc'));
-  let assets;
+  let userAssetsWithQuoteData;
 
   try {
-    // Retrive user assets data from the database
-    const snapshot = await getDocs(assetsQuery);
-    assets = snapshot.docs.map((doc) => {
-      return doc.data();
-    });
-
-    // Retrieve real-time quote for each user asset
-    assets = await Promise.all(
-      assets.map(async (asset) => {
-        const response = await fetch(
-          `${FINANCIAL_MODELING_PREP_ENDPOINT}${asset.symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
-        );
-        const quote = await response.json();
-        return {
-          ...asset,
-          name: quote[0].name,
-          price: quote[0].price.toFixed(2),
-        };
-      })
-    );
+    const userAssets = await getUserAssets();
+    userAssetsWithQuoteData = await getQuoteData(userAssets);
   } catch {
-    assets = [];
+    userAssetsWithQuoteData = [];
   }
 
   // Formatting the total return response
   let totalValue = 0;
   let totalAmountSpent = 0;
 
-  assets.forEach((asset) => {
+  userAssetsWithQuoteData.forEach((asset) => {
     totalValue += asset.numShares * asset.price;
     totalAmountSpent += asset.amountSpent;
   });
@@ -47,8 +27,8 @@ const getUserPortfolioData = async () => {
   const returnPct = Math.abs((returnAmount / totalValue) * 100).toFixed(2);
   const isNetGain = totalValue - totalAmountSpent > 0;
 
-  // Formatting the assets list response
-  const formattedAssets = assets.map((asset) => {
+  // Formatting the user assets list response
+  const formattedUserAssets = userAssetsWithQuoteData.map((asset) => {
     const { amountSpent, currency, name, numShares, price, symbol } = asset;
     const totalValue = (numShares * price).toFixed(2);
     const returnAmount = Math.abs(totalValue - amountSpent).toFixed(2);
@@ -67,7 +47,7 @@ const getUserPortfolioData = async () => {
   });
 
   return {
-    assets: formattedAssets,
+    assets: formattedUserAssets,
     isNetGain,
     returnAmount: `${isNetGain ? '' : '-'}$${returnAmount}`,
     returnPct: `${isNetGain ? '' : '-'}${returnPct}%`,
@@ -75,4 +55,55 @@ const getUserPortfolioData = async () => {
   };
 };
 
-export { getUserPortfolioData };
+// Get user assets data from the database
+const getUserAssets = async () => {
+  const assetsRef = collection(database, FIREBASE_COLLECTIONS.ASSETS);
+  const assetsQuery = query(assetsRef, where('userUid', '==', auth.currentUser.uid), orderBy('symbol', 'asc'));
+  const snapshot = await getDocs(assetsQuery);
+
+  return snapshot.docs.map((doc) => {
+    return doc.data();
+  });
+};
+
+// Get the real-time quote data for each user asset
+const getQuoteData = async (assets) => {
+  return await Promise.all(
+    assets.map(async (asset) => {
+      const response = await fetch(
+        `${FINANCIAL_MODELING_PREP_ENDPOINT}${asset.symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
+      );
+      const quote = await response.json();
+      return {
+        ...asset,
+        name: quote[0].name,
+        price: quote[0].price.toFixed(2),
+      };
+    })
+  );
+};
+
+const addNewAsset = async (symbol, numShares, pricePerShare) => {
+  if (await verifyAssetSymbol(symbol)) {
+    const assetsRef = collection(database, FIREBASE_COLLECTIONS.ASSETS);
+    addDoc(assetsRef, {
+      amountSpent: numShares * pricePerShare,
+      currency: 'USD',
+      numShares,
+      symbol,
+      userUid: auth.currentUser.uid,
+    });
+  } else {
+    throw new Error('Asset could not be found.');
+  }
+};
+
+const verifyAssetSymbol = async (symbol) => {
+  const response = await fetch(
+    `${FINANCIAL_MODELING_PREP_ENDPOINT}${symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
+  );
+  const quote = await response.json();
+  return !isEmpty(quote);
+};
+
+export { addNewAsset, getUserPortfolioData };

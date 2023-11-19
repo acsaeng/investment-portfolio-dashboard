@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 import { Button, Table } from 'react-bootstrap';
-import { MODAL_CONTENT, USER_ACTION } from '../constants';
-import { ADD_ASSET_BUTTON_LABEL, NO_DATA_RESPONSE, TABLE_HEADER, TABLE_TITLE } from './constants';
+import { MODAL_CONTENT } from '../constants';
+import { BUTTON_LABEL, NO_DATA_RESPONSE, TABLE_HEADER, TABLE_TITLE } from './constants';
 import './AssetsTable.scss';
 
 const AssetsTable = ({ setModalContent, userAssets }) => {
@@ -17,16 +17,17 @@ const AssetsTable = ({ setModalContent, userAssets }) => {
             setModalContent(MODAL_CONTENT.ADD_ASSET.FORM);
           }}
         >
-          {ADD_ASSET_BUTTON_LABEL}
+          {BUTTON_LABEL.ADD_ASSET}
         </Button>
       </div>
       <Table striped hover>
         <thead>
           <tr>
-            <th className='assets-table__heading--symbol'>{TABLE_HEADER.symbol}</th>
+            <th className='assets-table__heading--blank'>{TABLE_HEADER.symbol}</th>
             <th className='assets-table__heading'>{TABLE_HEADER.assetPrice}</th>
             <th className='assets-table__heading'>{TABLE_HEADER.totalValue}</th>
             <th className='assets-table__heading'>{TABLE_HEADER.return}</th>
+            <th className='assets-table__heading--blank'>{TABLE_HEADER.actions}</th>
           </tr>
         </thead>
         <tbody>
@@ -53,11 +54,16 @@ const AssetsTable = ({ setModalContent, userAssets }) => {
                   <br />
                   <span>{asset.returnPct}</span>
                 </td>
+                <td className='assets-table__row-item'>
+                  <Button onClick={() => setModalContent({ ...MODAL_CONTENT.DELETE_ASSET.FORM, symbol: asset.symbol })}>
+                    {BUTTON_LABEL.DELETE_ASSET}
+                  </Button>
+                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td className='assets-table__no-data-response' colSpan={4}>
+              <td className='assets-table__no-data-response' colSpan={5}>
                 {NO_DATA_RESPONSE}
               </td>
             </tr>

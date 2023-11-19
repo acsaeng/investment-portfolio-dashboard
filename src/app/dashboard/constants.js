@@ -10,10 +10,23 @@ const MODAL_CONTENT = {
       body: 'The asset has been added to your portfolio.',
       buttonLabel: 'Done',
     },
-    ERROR_RESPONSE: {
-      title: 'Error',
-      buttonLabel: 'Continue',
+  },
+  DELETE_ASSET: {
+    FORM: {
+      action: 'delete-asset',
+      title: 'Delete asset',
+      body: "Click 'Confirm' if you wish to delete this asset",
+      buttonLabel: 'Confirm',
     },
+    SUCCESS_RESPONSE: {
+      title: 'Success!',
+      body: 'The asset has been deleted from your portfolio.',
+      buttonLabel: 'Done',
+    },
+  },
+  ERROR_RESPONSE: {
+    title: 'Error',
+    buttonLabel: 'Continue',
   },
 };
 

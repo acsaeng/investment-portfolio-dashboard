@@ -9,7 +9,7 @@ import AssetsModal from './AssetsModal';
 import AssetsTable from './AssetsTable';
 import Navbar from '../components/Navbar';
 import Loader from '../components/Loader';
-import { addNewAsset, getUserPortfolioData } from '@/api/assets';
+import { addAsset, deleteAsset, getUserPortfolioData } from '@/api/assets';
 import PAGE from '@/utils/routes';
 import { MODAL_CONTENT } from './constants';
 import './Dashboard.scss';
@@ -23,20 +23,24 @@ const Dashboard = () => {
 
   const onSubmitAsset = async (event) => {
     event.preventDefault();
-    setShowLoader(true);
-
+    const currentModalContent = modalContent;
     let newModalContent = {};
 
+    setModalContent({});
+    setShowLoader(true);
+
     try {
-      if (modalContent.action === MODAL_CONTENT.ADD_ASSET.FORM.action) {
-        setModalContent({});
-        await addNewAsset(event.target.symbol.value, event.target.numShares.value, event.target.pricePerShare.value);
+      if (currentModalContent.action === MODAL_CONTENT.ADD_ASSET.FORM.action) {
+        await addAsset(event.target.symbol.value, event.target.numShares.value, event.target.pricePerShare.value);
         newModalContent = MODAL_CONTENT.ADD_ASSET.SUCCESS_RESPONSE;
+      } else if (currentModalContent.action === MODAL_CONTENT.DELETE_ASSET.FORM.action) {
+        await deleteAsset(currentModalContent.symbol);
+        newModalContent = MODAL_CONTENT.DELETE_ASSET.SUCCESS_RESPONSE;
       }
 
       setUserPortfolio(await getUserPortfolioData());
     } catch (error) {
-      newModalContent = { ...MODAL_CONTENT.ADD_ASSET.ERROR_RESPONSE, body: error.message };
+      newModalContent = { ...MODAL_CONTENT.ERROR_RESPONSE, body: error.message };
     }
 
     setShowLoader(false);

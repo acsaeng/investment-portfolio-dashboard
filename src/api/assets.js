@@ -1,5 +1,5 @@
 import { auth, database } from '@/config/firebase';
-import { addDoc, collection, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { isEmpty } from 'lodash';
 import { FINANCIAL_MODELING_PREP_ENDPOINT, FIREBASE_COLLECTIONS } from '@/utils/endpoints';
 
@@ -59,9 +59,9 @@ const getUserPortfolioData = async () => {
 const getUserAssets = async () => {
   const assetsRef = collection(database, FIREBASE_COLLECTIONS.ASSETS);
   const assetsQuery = query(assetsRef, where('userUid', '==', auth.currentUser.uid), orderBy('symbol', 'asc'));
-  const snapshot = await getDocs(assetsQuery);
+  const querySnapshot = await getDocs(assetsQuery);
 
-  return snapshot.docs.map((doc) => {
+  return querySnapshot.docs.map((doc) => {
     return doc.data();
   });
 };
@@ -83,7 +83,7 @@ const getQuoteData = async (assets) => {
   );
 };
 
-const addNewAsset = async (symbol, numShares, pricePerShare) => {
+const addAsset = async (symbol, numShares, pricePerShare) => {
   if (await verifyAssetSymbol(symbol)) {
     const assetsRef = collection(database, FIREBASE_COLLECTIONS.ASSETS);
     addDoc(assetsRef, {
@@ -106,4 +106,14 @@ const verifyAssetSymbol = async (symbol) => {
   return !isEmpty(quote);
 };
 
-export { addNewAsset, getUserPortfolioData };
+const deleteAsset = async (symbol) => {
+  const assetsRef = collection(database, FIREBASE_COLLECTIONS.ASSETS);
+  const assetsQuery = query(assetsRef, where('userUid', '==', auth.currentUser.uid), where('symbol', '==', symbol));
+  const querySnapshot = await getDocs(assetsQuery);
+
+  querySnapshot.docs.forEach(async (doc) => {
+    await deleteDoc(doc.ref);
+  });
+};
+
+export { addAsset, deleteAsset, getUserPortfolioData };

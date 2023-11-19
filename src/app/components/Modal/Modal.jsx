@@ -27,11 +27,7 @@ const Modal = ({
 );
 
 Modal.propTypes = {
-  buttonAttributes: PropTypes.shape({
-    form: PropTypes.string,
-    onClick: PropTypes.func,
-    type: PropTypes.string,
-  }),
+  buttonAttributes: PropTypes.shape(),
   buttonLabel: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
   closeButton: PropTypes.bool,

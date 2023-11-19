@@ -1,0 +1,25 @@
+@import '../../../scss/base-import';
+
+.assets-modal {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__form-input {
+    width: 300px !important;
+    margin-bottom: 10px;
+  }
+}
+
+// Remove arrows from number input
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}

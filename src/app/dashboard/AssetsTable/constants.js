@@ -1,5 +1,5 @@
 const TABLE_TITLE = 'Your portfolio';
-const ADD_NEW_ASSET_BUTTON_LABEL = 'Add new asset';
+const ADD_ASSET_BUTTON_LABEL = 'Add new asset';
 
 const TABLE_HEADER = {
   symbol: '',
@@ -10,4 +10,4 @@ const TABLE_HEADER = {
 
 const NO_DATA_RESPONSE = 'No data to show';
 
-export { ADD_NEW_ASSET_BUTTON_LABEL, NO_DATA_RESPONSE, TABLE_HEADER, TABLE_TITLE };
+export { ADD_ASSET_BUTTON_LABEL, NO_DATA_RESPONSE, TABLE_HEADER, TABLE_TITLE };

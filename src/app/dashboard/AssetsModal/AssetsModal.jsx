@@ -1,28 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 import { Form } from 'react-bootstrap';
 import Modal from '@/app/components/Modal';
 import { ASSET_FORM_FIELD } from './constants';
 import './AssetsModal.scss';
 
-const AssetsModal = ({ modalContent, onSubmit, setModalContent, setUserAction, userAction }) => {
+const AssetsModal = ({ modalContent, onSubmit, setModalContent }) => {
   return (
-    modalContent && (
+    !isEmpty(modalContent) && (
       <Modal
         buttonAttributes={{
-          ...(userAction
+          ...(modalContent.action
             ? { form: 'asset-form', type: 'submit' }
             : {
                 onClick: () => {
-                  setModalContent(null);
+                  setModalContent({});
                 },
               }),
         }}
         buttonLabel={modalContent.buttonLabel}
-        closeButton={!!userAction}
+        closeButton={!!modalContent.action}
         onHide={() => {
-          setUserAction(null);
-          setModalContent(null);
+          setModalContent({});
         }}
         title={modalContent.title}
       >
@@ -64,8 +64,6 @@ AssetsModal.propTypes = {
   modalContent: PropTypes.shape().isRequired,
   onSubmit: PropTypes.func.isRequired,
   setModalContent: PropTypes.func.isRequired,
-  setUserAction: PropTypes.func.isRequired,
-  userAction: PropTypes.string.isRequired,
 };
 
 export default AssetsModal;

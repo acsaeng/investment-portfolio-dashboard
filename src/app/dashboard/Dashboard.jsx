@@ -11,38 +11,36 @@ import Navbar from '../components/Navbar';
 import Loader from '../components/Loader';
 import { addNewAsset, getUserPortfolioData } from '@/api/assets';
 import PAGE from '@/utils/routes';
-import { MODAL_CONTENT, USER_ACTION } from './constants';
+import { MODAL_CONTENT } from './constants';
 import './Dashboard.scss';
 
 const Dashboard = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [userPortfolio, setUserPortfolio] = useState({});
-  const [userAction, setUserAction] = useState(null);
-  const [modalContent, setModalContent] = useState(null);
+  const [modalContent, setModalContent] = useState({});
   const [showLoader, setShowLoader] = useState(false);
   const router = useRouter();
 
   const onSubmitAsset = async (event) => {
     event.preventDefault();
-    setUserAction(null);
-    setModalContent(null);
     setShowLoader(true);
 
-    let modalContent;
+    let newModalContent = {};
 
     try {
-      if (userAction === USER_ACTION.ADD_NEW_ASSET) {
+      if (modalContent.action === MODAL_CONTENT.ADD_ASSET.FORM.action) {
+        setModalContent({});
         await addNewAsset(event.target.symbol.value, event.target.numShares.value, event.target.pricePerShare.value);
-        modalContent = MODAL_CONTENT.ADD_NEW_ASSET.SUCCESS_RESPONSE;
+        newModalContent = MODAL_CONTENT.ADD_ASSET.SUCCESS_RESPONSE;
       }
 
       setUserPortfolio(await getUserPortfolioData());
     } catch (error) {
-      modalContent = { ...MODAL_CONTENT.ADD_NEW_ASSET.ERROR_RESPONSE, body: error.message };
+      newModalContent = { ...MODAL_CONTENT.ADD_ASSET.ERROR_RESPONSE, body: error.message };
     }
 
     setShowLoader(false);
-    setModalContent(modalContent);
+    setModalContent(newModalContent);
   };
 
   useEffect(() => {
@@ -69,18 +67,8 @@ const Dashboard = () => {
                 userPortfolio.returnPct
               }) ${userPortfolio.isNetGain ? 'gain' : 'loss'}`}</span>
             </div>
-            <AssetsTable
-              setModalContent={setModalContent}
-              setUserAction={setUserAction}
-              userAssets={userPortfolio.assets}
-            />
-            <AssetsModal
-              modalContent={modalContent}
-              onSubmit={onSubmitAsset}
-              setModalContent={setModalContent}
-              setUserAction={setUserAction}
-              userAction={userAction}
-            />
+            <AssetsTable setModalContent={setModalContent} userAssets={userPortfolio.assets} />
+            <AssetsModal modalContent={modalContent} onSubmit={onSubmitAsset} setModalContent={setModalContent} />
           </>
         )}
       </div>

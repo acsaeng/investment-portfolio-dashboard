@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 import { Button, Table } from 'react-bootstrap';
 import { MODAL_CONTENT, USER_ACTION } from '../constants';
-import { ADD_NEW_ASSET_BUTTON_LABEL, NO_DATA_RESPONSE, TABLE_HEADER, TABLE_TITLE } from './constants';
+import { ADD_ASSET_BUTTON_LABEL, NO_DATA_RESPONSE, TABLE_HEADER, TABLE_TITLE } from './constants';
 import './AssetsTable.scss';
 
-const AssetsTable = ({ setModalContent, setUserAction, userAssets }) => {
+const AssetsTable = ({ setModalContent, userAssets }) => {
   return (
     <div className='assets-table'>
       <div className='assets-table__header'>
@@ -14,11 +14,10 @@ const AssetsTable = ({ setModalContent, setUserAction, userAssets }) => {
         <Button
           className='assets-table__add-asset-button'
           onClick={() => {
-            setUserAction(USER_ACTION.ADD_NEW_ASSET);
-            setModalContent(MODAL_CONTENT.ADD_NEW_ASSET.FORM);
+            setModalContent(MODAL_CONTENT.ADD_ASSET.FORM);
           }}
         >
-          {ADD_NEW_ASSET_BUTTON_LABEL}
+          {ADD_ASSET_BUTTON_LABEL}
         </Button>
       </div>
       <Table striped hover>
@@ -71,7 +70,6 @@ const AssetsTable = ({ setModalContent, setUserAction, userAssets }) => {
 
 AssetsTable.propTypes = {
   setModalContent: PropTypes.func.isRequired,
-  setUserAction: PropTypes.func.isRequired,
   userAssets: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 

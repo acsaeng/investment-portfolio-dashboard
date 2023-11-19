@@ -1,10 +1,7 @@
-const USER_ACTION = {
-  ADD_NEW_ASSET: 'add-new-asset',
-};
-
 const MODAL_CONTENT = {
-  ADD_NEW_ASSET: {
+  ADD_ASSET: {
     FORM: {
+      action: 'add-asset',
       title: 'Add new asset',
       buttonLabel: 'Add',
     },
@@ -20,4 +17,4 @@ const MODAL_CONTENT = {
   },
 };
 
-export { MODAL_CONTENT, USER_ACTION };
+export { MODAL_CONTENT };

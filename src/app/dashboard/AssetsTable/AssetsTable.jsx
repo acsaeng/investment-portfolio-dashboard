@@ -55,7 +55,16 @@ const AssetsTable = ({ setModalContent, userAssets }) => {
                   <span>{asset.returnPct}</span>
                 </td>
                 <td className='assets-table__row-item'>
-                  <Button onClick={() => setModalContent({ ...MODAL_CONTENT.DELETE_ASSET.FORM, symbol: asset.symbol })}>
+                  <Button
+                    className='assets-table__action-button'
+                    onClick={() => setModalContent({ ...MODAL_CONTENT.BUY_OR_SELL_ASSET.FORM, symbol: asset.symbol })}
+                  >
+                    {BUTTON_LABEL.BUY_OR_SELL_ASSET}
+                  </Button>
+                  <Button
+                    className='assets-table__action-button'
+                    onClick={() => setModalContent({ ...MODAL_CONTENT.DELETE_ASSET.FORM, symbol: asset.symbol })}
+                  >
                     {BUTTON_LABEL.DELETE_ASSET}
                   </Button>
                 </td>

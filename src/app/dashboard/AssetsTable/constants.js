@@ -1,6 +1,7 @@
 const TABLE_TITLE = 'Your portfolio';
 const BUTTON_LABEL = {
   ADD_ASSET: 'Add asset',
+  BUY_OR_SELL_ASSET: 'Buy/sell',
   DELETE_ASSET: 'Delete',
 };
 

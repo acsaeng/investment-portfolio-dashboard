@@ -11,6 +11,18 @@ const MODAL_CONTENT = {
       buttonLabel: 'Done',
     },
   },
+  BUY_OR_SELL_ASSET: {
+    FORM: {
+      action: 'buy-or-sell-asset',
+      title: 'Buy/sell asset',
+      buttonLabel: 'Confirm',
+    },
+    SUCCESS_RESPONSE: {
+      title: 'Success!',
+      body: 'The asset has been updated in your portfolio.',
+      buttonLabel: 'Done',
+    },
+  },
   DELETE_ASSET: {
     FORM: {
       action: 'delete-asset',

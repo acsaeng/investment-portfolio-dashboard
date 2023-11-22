@@ -47,7 +47,7 @@ const SignUp = () => {
           : MODAL_LABEL.ERROR.DEFAULT_BODY,
         button: MODAL_LABEL.ERROR.BUTTON,
         buttonEvent: () => setModalContent({}),
-        href: null,
+        href: undefined,
       });
     }
 

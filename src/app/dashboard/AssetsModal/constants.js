@@ -1,4 +1,12 @@
 const ASSET_FORM_FIELD = {
+  BUY_OR_SELL: {
+    buyLabel: 'Buy',
+    buyValue: 'buy',
+    name: 'buyOrSell',
+    sellLabel: 'Sell',
+    sellValue: 'sell',
+    type: 'radio',
+  },
   SYMBOL: {
     label: 'Symbol',
     maxLength: 4,

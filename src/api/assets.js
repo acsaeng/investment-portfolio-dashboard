@@ -1,5 +1,5 @@
 import { auth, database } from '@/config/firebase';
-import { addDoc, collection, deleteDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, orderBy, query, runTransaction, setDoc, where } from 'firebase/firestore';
 import { isEmpty } from 'lodash';
 import { FINANCIAL_MODELING_PREP_ENDPOINT, FIREBASE_COLLECTIONS } from '@/utils/endpoints';
 
@@ -83,10 +83,12 @@ const getQuoteData = async (assets) => {
   );
 };
 
-const addAsset = async (symbol, numShares, pricePerShare) => {
-  if (await verifyAssetSymbol(symbol)) {
-    const assetsRef = collection(database, FIREBASE_COLLECTIONS.ASSETS);
-    addDoc(assetsRef, {
+const addAsset = async (userAssetHoldings, symbol, numShares, pricePerShare) => {
+  if (userAssetHoldings.includes(symbol)) {
+    throw new Error('Asset already exists in your portfolio.');
+  } else if (await verifyAssetSymbol(symbol)) {
+    const assetDocRef = doc(database, FIREBASE_COLLECTIONS.ASSETS, `${auth.currentUser.uid}-${symbol}`);
+    await setDoc(assetDocRef, {
       amountSpent: numShares * pricePerShare,
       currency: 'USD',
       numShares,
@@ -106,6 +108,20 @@ const verifyAssetSymbol = async (symbol) => {
   return !isEmpty(quote);
 };
 
+const buyOrSellAsset = async (isBuy, symbol, numShares, pricePerShare) => {
+  await runTransaction(database, async (transaction) => {
+    const assetDocRef = doc(database, FIREBASE_COLLECTIONS.ASSETS, `${auth.currentUser.uid}-${symbol}`);
+    const assetDoc = await transaction.get(assetDocRef);
+    const assetData = assetDoc.data();
+    transaction.update(assetDocRef, {
+      amountSpent: isBuy
+        ? assetData.amountSpent + numShares * pricePerShare
+        : assetData.amountSpent - numShares * pricePerShare,
+      numShares: isBuy ? assetData.numShares + numShares : assetData.numShares - numShares,
+    });
+  });
+};
+
 const deleteAsset = async (symbol) => {
   const assetsRef = collection(database, FIREBASE_COLLECTIONS.ASSETS);
   const assetsQuery = query(assetsRef, where('userUid', '==', auth.currentUser.uid), where('symbol', '==', symbol));
@@ -116,4 +132,4 @@ const deleteAsset = async (symbol) => {
   });
 };
 
-export { addAsset, deleteAsset, getUserPortfolioData };
+export { addAsset, buyOrSellAsset, deleteAsset, getUserPortfolioData };

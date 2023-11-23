@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 import { Button, Table } from 'react-bootstrap';
-import { MODAL_CONTENT } from '../constants';
-import { BUTTON_LABEL, NO_DATA_RESPONSE, TABLE_HEADER, TABLE_TITLE } from './constants';
+import { BUTTON_LABEL, MODAL_CONTENT, NO_DATA_RESPONSE, TABLE_HEADER, TABLE_TITLE } from './constants';
 import './AssetsTable.scss';
 
 const AssetsTable = ({ setModalContent, userAssets }) => {

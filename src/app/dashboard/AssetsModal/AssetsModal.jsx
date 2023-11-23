@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 import { Form } from 'react-bootstrap';
 import Modal from '@/app/components/Modal';
-import { ASSET_FORM_FIELD } from './constants';
-import { MODAL_CONTENT } from '../constants';
+import { ASSET_FORM_FIELD, MODAL_CONTENT } from '../constants';
 import './AssetsModal.scss';
 
 const AssetsModal = ({ modalContent, onSubmit, setModalContent }) => {

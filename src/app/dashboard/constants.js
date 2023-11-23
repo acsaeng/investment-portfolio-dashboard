@@ -1,3 +1,20 @@
+const TABLE_TITLE = 'Your portfolio';
+const BUTTON_LABEL = {
+  ADD_ASSET: 'Add asset',
+  BUY_OR_SELL_ASSET: 'Buy/sell',
+  DELETE_ASSET: 'Delete',
+};
+
+const TABLE_HEADER = {
+  symbol: '',
+  assetPrice: 'Current price',
+  totalValue: 'Total value',
+  return: 'All time return',
+  actions: '',
+};
+
+const NO_DATA_RESPONSE = 'No data to show';
+
 const MODAL_CONTENT = {
   ADD_ASSET: {
     FORM: {
@@ -42,4 +59,34 @@ const MODAL_CONTENT = {
   },
 };
 
-export { MODAL_CONTENT };
+const ASSET_FORM_FIELD = {
+  BUY_OR_SELL: {
+    buyLabel: 'Buy',
+    buyValue: 'buy',
+    name: 'buyOrSell',
+    sellLabel: 'Sell',
+    sellValue: 'sell',
+    type: 'radio',
+  },
+  SYMBOL: {
+    label: 'Symbol',
+    maxLength: 4,
+    name: 'symbol',
+  },
+  NUM_SHARES: {
+    label: 'Number of shares',
+    min: 0,
+    name: 'numShares',
+    type: 'number',
+  },
+  PRICE_PER_SHARE: {
+    label: 'Price per share',
+    maxLength: 9,
+    min: 0,
+    name: 'pricePerShare',
+    step: '0.01',
+    type: 'number',
+  },
+};
+
+export { ASSET_FORM_FIELD, BUTTON_LABEL, MODAL_CONTENT, NO_DATA_RESPONSE, TABLE_HEADER, TABLE_TITLE };

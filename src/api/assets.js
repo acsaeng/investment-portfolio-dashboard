@@ -1,5 +1,5 @@
 import { auth, database } from '@/config/firebase';
-import { collection, deleteDoc, doc, getDocs, orderBy, query, runTransaction, setDoc, where } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, orderBy, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import { isEmpty } from 'lodash';
 import { FINANCIAL_MODELING_PREP_ENDPOINT, FIREBASE_COLLECTIONS } from '@/utils/endpoints';
 
@@ -13,7 +13,7 @@ const getUserPortfolioData = async () => {
     userAssetsWithQuoteData = [];
   }
 
-  // Formatting the total return response
+  // Calculating the total return response
   let totalValue = 0;
   let totalAmountSpent = 0;
 
@@ -22,36 +22,15 @@ const getUserPortfolioData = async () => {
     totalAmountSpent += asset.amountSpent;
   });
 
-  totalValue = totalValue.toFixed(2);
-  const returnAmount = Math.abs(totalValue - totalAmountSpent).toFixed(2);
-  const returnPct = Math.abs((returnAmount / totalValue) * 100).toFixed(2);
-  const isNetGain = totalValue - totalAmountSpent > 0;
-
-  // Formatting the user assets list response
-  const formattedUserAssets = userAssetsWithQuoteData.map((asset) => {
-    const { amountSpent, currency, name, numShares, price, symbol } = asset;
-    const totalValue = (numShares * price).toFixed(2);
-    const returnAmount = Math.abs(totalValue - amountSpent).toFixed(2);
-    const returnPct = Math.abs((returnAmount / totalValue) * 100).toFixed(2);
-    const isNetGain = totalValue - amountSpent > 0;
-    return {
-      currency,
-      name,
-      numShares: `${numShares} shares`,
-      price: `$${price}`,
-      returnAmount: `${isNetGain ? '' : '-'}$${returnAmount}`,
-      returnPct: `${isNetGain ? '' : '-'}${returnPct}%`,
-      symbol,
-      totalValue: `$${totalValue}`,
-    };
-  });
+  totalValue = totalValue;
+  const returnAmount = totalValue - totalAmountSpent;
+  const returnPct = (returnAmount / totalValue) * 100;
 
   return {
-    assets: formattedUserAssets,
-    isNetGain,
-    returnAmount: `${isNetGain ? '' : '-'}$${returnAmount}`,
-    returnPct: `${isNetGain ? '' : '-'}${returnPct}%`,
-    totalValue: `$${totalValue}`,
+    assets: userAssetsWithQuoteData,
+    returnAmount,
+    returnPct,
+    totalValue,
   };
 };
 
@@ -61,9 +40,7 @@ const getUserAssets = async () => {
   const assetsQuery = query(assetsRef, where('userUid', '==', auth.currentUser.uid), orderBy('symbol', 'asc'));
   const querySnapshot = await getDocs(assetsQuery);
 
-  return querySnapshot.docs.map((doc) => {
-    return doc.data();
-  });
+  return querySnapshot.docs.map((doc) => doc.data());
 };
 
 // Get the real-time quote data for each user asset
@@ -74,10 +51,18 @@ const getQuoteData = async (assets) => {
         `${FINANCIAL_MODELING_PREP_ENDPOINT}${asset.symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
       );
       const quote = await response.json();
+      const price = quote[0].price;
+      const totalValue = asset.numShares * price;
+      const returnAmount = totalValue - asset.amountSpent;
+      const returnPct = (returnAmount / totalValue) * 100;
+
       return {
         ...asset,
         name: quote[0].name,
-        price: quote[0].price.toFixed(2),
+        price,
+        totalValue,
+        returnAmount,
+        returnPct,
       };
     })
   );
@@ -108,28 +93,26 @@ const verifyAssetSymbol = async (symbol) => {
   return !isEmpty(quote);
 };
 
-const buyOrSellAsset = async (isBuy, symbol, numShares, pricePerShare) => {
-  await runTransaction(database, async (transaction) => {
-    const assetDocRef = doc(database, FIREBASE_COLLECTIONS.ASSETS, `${auth.currentUser.uid}-${symbol}`);
-    const assetDoc = await transaction.get(assetDocRef);
-    const assetData = assetDoc.data();
-    transaction.update(assetDocRef, {
+const buyOrSellAsset = async (assetData, isBuy, symbol, numShares, pricePerShare) => {
+  const assetDocRef = doc(database, FIREBASE_COLLECTIONS.ASSETS, `${auth.currentUser.uid}-${symbol}`);
+
+  if (!isBuy && numShares > assetData.numShares) {
+    throw new Error('Cannot sell more shares than you own.');
+  } else if (!isBuy && numShares === assetData.numShares) {
+    await deleteAsset(symbol);
+  } else {
+    await updateDoc(assetDocRef, {
       amountSpent: isBuy
         ? assetData.amountSpent + numShares * pricePerShare
         : assetData.amountSpent - numShares * pricePerShare,
       numShares: isBuy ? assetData.numShares + numShares : assetData.numShares - numShares,
     });
-  });
+  }
 };
 
 const deleteAsset = async (symbol) => {
-  const assetsRef = collection(database, FIREBASE_COLLECTIONS.ASSETS);
-  const assetsQuery = query(assetsRef, where('userUid', '==', auth.currentUser.uid), where('symbol', '==', symbol));
-  const querySnapshot = await getDocs(assetsQuery);
-
-  querySnapshot.docs.forEach(async (doc) => {
-    await deleteDoc(doc.ref);
-  });
+  const assetDocRef = doc(database, FIREBASE_COLLECTIONS.ASSETS, `${auth.currentUser.uid}-${symbol}`);
+  await deleteDoc(assetDocRef);
 };
 
 export { addAsset, buyOrSellAsset, deleteAsset, getUserPortfolioData };

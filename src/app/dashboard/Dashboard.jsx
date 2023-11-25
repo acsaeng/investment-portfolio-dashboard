@@ -10,10 +10,10 @@ import AssetsTable from './AssetsTable';
 import Navbar from '../components/Navbar';
 import Loader from '../components/Loader';
 import { addAsset, buyOrSellAsset, deleteAsset, getUserPortfolioData } from '@/api/assets';
+import { formatCurrency, formatPercentage } from '@/utils/helpers';
 import PAGE from '@/utils/routes';
-import { MODAL_CONTENT } from './constants';
+import { ASSET_FORM_FIELD, DASHBOARD_HEADER_FIELD, MODAL_CONTENT } from './constants';
 import './Dashboard.scss';
-import { ASSET_FORM_FIELD } from './AssetsModal/constants';
 
 const Dashboard = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -41,9 +41,12 @@ const Dashboard = () => {
         newModalContent = MODAL_CONTENT.ADD_ASSET.SUCCESS_RESPONSE;
       } else if (currentModalContent.action === MODAL_CONTENT.BUY_OR_SELL_ASSET.FORM.action) {
         const isBuy = event.target.buyOrSell.value === ASSET_FORM_FIELD.BUY_OR_SELL.buyValue;
+        const symbol = event.target.symbol.value;
+        const userAsset = userPortfolio.assets.find((asset) => asset.symbol === symbol);
         await buyOrSellAsset(
+          userAsset,
           isBuy,
-          event.target.symbol.value,
+          symbol,
           event.target.numShares.valueAsNumber,
           event.target.pricePerShare.valueAsNumber
         );
@@ -81,10 +84,12 @@ const Dashboard = () => {
         {!isEmpty(userPortfolio) && (
           <>
             <div className='dashboard__total-value'>
-              <span className='dashboard__total-value-amount'>{userPortfolio.totalValue}</span>
-              <span className='dashboard__total-value-status'>{`${userPortfolio.returnAmount} (${
-                userPortfolio.returnPct
-              }) ${userPortfolio.isNetGain ? 'gain' : 'loss'}`}</span>
+              <span className='dashboard__total-value-amount'>{formatCurrency(userPortfolio.totalValue)}</span>
+              <span className='dashboard__total-value-status'>{`${formatCurrency(
+                userPortfolio.returnAmount
+              )} (${formatPercentage(userPortfolio.returnPct)}) ${
+                userPortfolio.returnAmount > 0 ? DASHBOARD_HEADER_FIELD.gainLabel : DASHBOARD_HEADER_FIELD.lossLabel
+              }`}</span>
             </div>
             <AssetsTable setModalContent={setModalContent} userAssets={userPortfolio.assets} />
             <AssetsModal modalContent={modalContent} onSubmit={onSubmitAsset} setModalContent={setModalContent} />

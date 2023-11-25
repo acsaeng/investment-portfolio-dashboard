@@ -1,19 +1,28 @@
-const TABLE_TITLE = 'Your portfolio';
-const BUTTON_LABEL = {
-  ADD_ASSET: 'Add asset',
-  BUY_OR_SELL_ASSET: 'Buy/sell',
-  DELETE_ASSET: 'Delete',
+const DASHBOARD_HEADER_FIELD = {
+  gainLabel: 'gain',
+  lossLabel: 'loss',
 };
 
-const TABLE_HEADER = {
-  symbol: '',
-  assetPrice: 'Current price',
-  totalValue: 'Total value',
-  return: 'All time return',
-  actions: '',
+const TABLE_FIELD = {
+  TITLE: 'Your portfolio',
+  HEADER: {
+    symbol: '',
+    assetPrice: 'Current price',
+    totalValue: 'Total value',
+    return: 'All time return',
+    actions: '',
+  },
+  ITEM_LABEL: {
+    shareSuffix: 'share',
+    sharesSuffix: 'shares',
+  },
+  BUTTON_LABEL: {
+    addAsset: 'Add asset',
+    buyOrSellAsset: 'Buy/sell',
+    deleteAsset: 'Delete',
+  },
+  NO_DATA_RESPONSE: 'No data to show',
 };
-
-const NO_DATA_RESPONSE = 'No data to show';
 
 const MODAL_CONTENT = {
   ADD_ASSET: {
@@ -89,4 +98,4 @@ const ASSET_FORM_FIELD = {
   },
 };
 
-export { ASSET_FORM_FIELD, BUTTON_LABEL, MODAL_CONTENT, NO_DATA_RESPONSE, TABLE_HEADER, TABLE_TITLE };
+export { ASSET_FORM_FIELD, DASHBOARD_HEADER_FIELD, MODAL_CONTENT, TABLE_FIELD };

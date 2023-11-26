@@ -18,8 +18,6 @@ const TABLE_FIELD = {
   },
   BUTTON_LABEL: {
     addAsset: 'Add asset',
-    buyOrSellAsset: 'Buy/sell',
-    deleteAsset: 'Delete',
   },
   NO_DATA_RESPONSE: 'No data to show',
 };

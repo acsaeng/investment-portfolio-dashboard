@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 import { Button, Table } from 'react-bootstrap';
+import { BiSolidTrash, BiTransfer } from 'react-icons/bi';
 import { formatCurrency, formatPercentage } from '@/utils/helpers';
 import { MODAL_CONTENT, TABLE_FIELD } from '../constants';
 import './AssetsTable.scss';
@@ -61,13 +62,13 @@ const AssetsTable = ({ setModalContent, userAssets }) => {
                     className='assets-table__action-button'
                     onClick={() => setModalContent({ ...MODAL_CONTENT.BUY_OR_SELL_ASSET.FORM, symbol: asset.symbol })}
                   >
-                    {TABLE_FIELD.BUTTON_LABEL.buyOrSellAsset}
+                    <BiTransfer />
                   </Button>
                   <Button
                     className='assets-table__action-button'
                     onClick={() => setModalContent({ ...MODAL_CONTENT.DELETE_ASSET.FORM, symbol: asset.symbol })}
                   >
-                    {TABLE_FIELD.BUTTON_LABEL.deleteAsset}
+                    <BiSolidTrash />
                   </Button>
                 </td>
               </tr>

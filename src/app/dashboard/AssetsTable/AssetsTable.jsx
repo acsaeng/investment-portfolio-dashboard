@@ -21,14 +21,14 @@ const AssetsTable = ({ setModalContent, userAssets }) => {
           {TABLE_FIELD.BUTTON_LABEL.addAsset}
         </Button>
       </div>
-      <Table striped hover>
+      <Table className='assets-table__table' striped hover>
         <thead>
           <tr>
-            <th className='assets-table__heading--blank'>{TABLE_FIELD.HEADER.symbol}</th>
+            <th className='assets-table__heading assets-table__heading--blank'>{TABLE_FIELD.HEADER.symbol}</th>
             <th className='assets-table__heading'>{TABLE_FIELD.HEADER.assetPrice}</th>
             <th className='assets-table__heading'>{TABLE_FIELD.HEADER.totalValue}</th>
             <th className='assets-table__heading'>{TABLE_FIELD.HEADER.return}</th>
-            <th className='assets-table__heading--blank'>{TABLE_FIELD.HEADER.actions}</th>
+            <th className='assets-table__heading assets-table__heading--blank'>{TABLE_FIELD.HEADER.actions}</th>
           </tr>
         </thead>
         <tbody>
@@ -36,26 +36,26 @@ const AssetsTable = ({ setModalContent, userAssets }) => {
             userAssets.map((asset) => (
               <tr className='assets-table__row' key={asset.symbol}>
                 <td className='assets-table__row-item'>
-                  <span>{asset.symbol}</span>
+                  <span className='assets-table__field'>{asset.symbol}</span>
                   <br />
-                  <span>{asset.name}</span>
+                  <span className='assets-table__field assets-table__field--name'>{asset.name}</span>
                 </td>
                 <td className='assets-table__row-item'>
-                  <span>{formatCurrency(asset.price)}</span>
+                  <span className='assets-table__field'>{formatCurrency(asset.price)}</span>
                   <br />
-                  <span>{asset.currency}</span>
+                  <span className='assets-table__field'>{asset.currency}</span>
                 </td>
                 <td className='assets-table__row-item'>
-                  <span>{formatCurrency(asset.totalValue)}</span>
+                  <span className='assets-table__field'>{formatCurrency(asset.totalValue)}</span>
                   <br />
-                  <span>{`${asset.numShares} ${
+                  <span className='assets-table__field'>{`${asset.numShares} ${
                     asset.numShares === 1 ? TABLE_FIELD.ITEM_LABEL.shareSuffix : TABLE_FIELD.ITEM_LABEL.sharesSuffix
                   }`}</span>
                 </td>
                 <td className='assets-table__row-item'>
-                  <span>{formatCurrency(asset.returnAmount)}</span>
+                  <span className='assets-table__field'>{formatCurrency(asset.returnAmount)}</span>
                   <br />
-                  <span>{formatPercentage(asset.returnPct)}</span>
+                  <span className='assets-table__field'>{formatPercentage(asset.returnPct)}</span>
                 </td>
                 <td className='assets-table__row-item'>
                   <Button

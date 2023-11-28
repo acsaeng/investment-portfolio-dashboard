@@ -3,7 +3,15 @@
 .assets-table {
   display: flex;
   flex-direction: column;
-  width: 800px !important;
+  width: 95vw !important;
+
+  @include media-breakpoint-up(md) {
+    width: 700px !important;
+  }
+
+  @include media-breakpoint-up(lg) {
+    width: 800px !important;
+  }
 
   &__header {
     display: flex;
@@ -19,12 +27,43 @@
     margin-left: auto;
   }
 
+  &__heading {
+    text-align: center;
+
+    @include media-breakpoint-up(md) {
+      text-align: left;
+    }
+  }
+
   &__heading--blank {
     padding: 0 30px !important;
   }
 
+  &__row-item {
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px 4px !important;
+
+    @include media-breakpoint-up(md) {
+      text-align: left;
+      padding: 8px !important;
+    }
+  }
+
+  &__field--name {
+    display: none;
+
+    @include media-breakpoint-up(md) {
+      display: block;
+    }
+  }
+
   &__action-button {
-    margin: 0 2px;
+    margin: 2px 0;
+
+    @include media-breakpoint-up(md) {
+      margin: 0 2px;
+    }
   }
 
   &__no-data-response {

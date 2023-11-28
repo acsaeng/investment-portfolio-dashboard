@@ -5,24 +5,24 @@ const FORM_LABEL = {
 };
 
 const FORM_FIELD = {
-  FIRST_NAME: {
-    label: 'First name',
+  FIRST_NAME_INPUT: {
+    placeholder: 'First name',
     maxLength: 15,
     name: 'firstName',
   },
-  LAST_NAME: {
-    label: 'Last name',
+  LAST_NAME_INPUT: {
+    placeholder: 'Last name',
     maxLength: 15,
     name: 'lastName',
   },
-  EMAIL: {
-    label: 'Email address',
+  EMAIL_INPUT: {
+    placeholder: 'Email address',
     maxLength: 100,
     name: 'email',
     type: 'email',
   },
-  PASSWORD: {
-    label: 'Password',
+  PASSWORD_INPUT: {
+    placeholder: 'Password',
     name: 'password',
     // TODO: implement password pattern
     // pattern: '',
@@ -30,13 +30,13 @@ const FORM_FIELD = {
       'Must contain at least one uppercase letter, one lowercase letter, one number, one special character, and consist of 8 or more characters.',
     type: 'password',
   },
-  DOB: {
-    label: 'Date of birth',
+  DOB_INPUT: {
+    placeholder: 'Date of birth',
     name: 'dob',
     type: 'date',
   },
-  GENDER: {
-    label: 'Gender',
+  GENDER_SELECT: {
+    placeholder: 'Gender',
     name: 'gender',
     options: ['Male', 'Female', 'Other'],
   },

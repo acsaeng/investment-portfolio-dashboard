@@ -7,9 +7,9 @@ const FORM_LABEL = {
 };
 
 const EMAIL_FORM_FIELD = {
-  label: 'Email address',
   maxLength: 100,
   name: 'email',
+  placeholder: 'Email address',
   type: 'email',
 };
 

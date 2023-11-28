@@ -43,20 +43,8 @@ const SignIn = () => {
         <Image alt={LOGO_IMAGE_ALT} className='sign-in__logo' placeholder='blur' quality={100} src={CompanyLogo} />
         <h2 className='sign-in__title'>{FORM_LABEL.FORM_HEADER}</h2>
         <Form className='sign-in__form' onSubmit={onSignIn}>
-          <Form.Control
-            className='sign-in__input'
-            name={FORM_FIELD.EMAIL.name}
-            placeholder={FORM_FIELD.EMAIL.label}
-            required
-            type={FORM_FIELD.EMAIL.type}
-          />
-          <Form.Control
-            className='sign-in__input'
-            name={FORM_FIELD.PASSWORD.name}
-            placeholder={FORM_FIELD.PASSWORD.label}
-            required
-            type={FORM_FIELD.PASSWORD.type}
-          />
+          <Form.Control {...FORM_FIELD.EMAIL_INPUT} className='sign-in__input' required />
+          <Form.Control {...FORM_FIELD.PASSWORD_INPUT} className='sign-in__input' required />
           <div className='sign-in__message-and-ctas-container'>
             <div className='sign-in__links-container'>
               <Link className='sign-in__account-link' href={PAGE.SIGN_UP}>

@@ -67,31 +67,35 @@ const MODAL_CONTENT = {
 };
 
 const ASSET_FORM_FIELD = {
-  BUY_OR_SELL: {
-    buyLabel: 'Buy',
-    buyValue: 'buy',
+  BUY_RADIO_BUTTON: {
+    label: 'Buy',
     name: 'buyOrSell',
-    sellLabel: 'Sell',
-    sellValue: 'sell',
+    value: 'buy',
     type: 'radio',
   },
-  SYMBOL: {
-    label: 'Symbol',
+  SELL_RADIO_BUTTON: {
+    label: 'Sell',
+    name: 'buyOrSell',
+    value: 'sell',
+    type: 'radio',
+  },
+  SYMBOL_INPUT: {
     maxLength: 6,
     name: 'symbol',
+    placeholder: 'Symbol',
   },
-  NUM_SHARES: {
-    label: 'Number of shares',
+  NUM_SHARES_INPUT: {
     min: 0,
     name: 'numShares',
+    placeholder: 'Number of shares',
     suffix: 'shares',
     type: 'number',
   },
-  PRICE_PER_SHARE: {
-    label: 'Price per share',
+  PRICE_PER_SHARE_INPUT: {
     maxLength: 9,
     min: 0,
     name: 'pricePerShare',
+    placeholder: 'Price per share',
     prefix: '$',
     step: '0.01',
     type: 'number',

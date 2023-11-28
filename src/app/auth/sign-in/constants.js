@@ -8,15 +8,15 @@ const FORM_LABEL = {
 };
 
 const FORM_FIELD = {
-  EMAIL: {
-    label: 'Email address',
+  EMAIL_INPUT: {
     maxLength: 100,
     name: 'email',
+    placeholder: 'Email address',
     type: 'email',
   },
-  PASSWORD: {
-    label: 'Password',
+  PASSWORD_INPUT: {
     name: 'password',
+    placeholder: 'Password',
     type: 'password',
   },
 };

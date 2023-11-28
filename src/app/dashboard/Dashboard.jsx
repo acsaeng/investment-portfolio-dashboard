@@ -40,7 +40,7 @@ const Dashboard = () => {
         );
         newModalContent = MODAL_CONTENT.ADD_ASSET.SUCCESS_RESPONSE;
       } else if (currentModalContent.action === MODAL_CONTENT.BUY_OR_SELL_ASSET.FORM.action) {
-        const isBuy = event.target.buyOrSell.value === ASSET_FORM_FIELD.BUY_OR_SELL.buyValue;
+        const isBuy = event.target.buyOrSell.value === ASSET_FORM_FIELD.BUY_RADIO_BUTTON.value;
         const symbol = event.target.symbol.value;
         const userAsset = userPortfolio.assets.find((asset) => asset.symbol === symbol);
         await buyOrSellAsset(

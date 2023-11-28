@@ -46,14 +46,7 @@ const ForgotPassword = () => {
         />
         <h6 className='forgot-password__header'>{FORM_LABEL.FORM_HEADER}</h6>
         <Form className='forgot-password__form' onSubmit={onSubmit}>
-          <Form.Control
-            className='forgot-password__email-input'
-            maxLength={EMAIL_FORM_FIELD.maxLength}
-            name={EMAIL_FORM_FIELD.name}
-            placeholder={EMAIL_FORM_FIELD.label}
-            required
-            type={EMAIL_FORM_FIELD.type}
-          />
+          <Form.Control {...EMAIL_FORM_FIELD} className='forgot-password__email-input' required />
           <Button className='forgot-password__submit-button' type='submit'>
             {FORM_LABEL.SUBMIT_LABEL}
           </Button>

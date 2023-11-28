@@ -68,52 +68,14 @@ const SignUp = () => {
         <h6 className='sign-up__header'>{FORM_LABEL.FORM_HEADER}</h6>
         <Form className='sign-up__form' onSubmit={onSubmit}>
           <div className='sign-up__name-inputs-container'>
-            <Form.Control
-              className='sign-up__first-name-input'
-              maxLength={FORM_FIELD.FIRST_NAME.maxLength}
-              name={FORM_FIELD.FIRST_NAME.name}
-              placeholder={FORM_FIELD.FIRST_NAME.label}
-              required
-            />
-            <Form.Control
-              className='sign-up__last-name-input'
-              maxLength={FORM_FIELD.LAST_NAME.maxLength}
-              name={FORM_FIELD.LAST_NAME.name}
-              placeholder={FORM_FIELD.LAST_NAME.label}
-              required
-            />
+            <Form.Control {...FORM_FIELD.FIRST_NAME_INPUT} className='sign-up__first-name-input' required />
+            <Form.Control {...FORM_FIELD.LAST_NAME_INPUT} className='sign-up__last-name-input' required />
           </div>
-          <Form.Control
-            className='sign-up__email-input'
-            maxLength={FORM_FIELD.EMAIL.maxLength}
-            name={FORM_FIELD.EMAIL.name}
-            placeholder={FORM_FIELD.EMAIL.label}
-            required
-            type={FORM_FIELD.EMAIL.type}
-          />
-          <Form.Control
-            className='sign-up__password-input'
-            name={FORM_FIELD.PASSWORD.name}
-            // pattern={FORM_FIELD.PASSWORD.pattern}
-            title={FORM_FIELD.PASSWORD.title}
-            placeholder={FORM_FIELD.PASSWORD.label}
-            required
-            type={FORM_FIELD.PASSWORD.type}
-          />
-          <Form.Control
-            className='sign-up__dob-input'
-            name={FORM_FIELD.DOB.name}
-            placeholder={FORM_FIELD.DOB.label}
-            required
-            type={FORM_FIELD.DOB.type}
-          />
-          <Form.Select
-            className='sign-up__gender-input'
-            name={FORM_FIELD.GENDER.name}
-            placeholder={FORM_FIELD.GENDER.label}
-            required
-          >
-            {FORM_FIELD.GENDER.options.map((gender) => (
+          <Form.Control {...FORM_FIELD.EMAIL_INPUT} className='sign-up__email-input' required />
+          <Form.Control {...FORM_FIELD.PASSWORD_INPUT} className='sign-up__password-input' required />
+          <Form.Control {...FORM_FIELD.DOB_INPUT} className='sign-up__dob-input' required />
+          <Form.Select {...FORM_FIELD.GENDER_SELECT} className='sign-up__gender-input' required>
+            {FORM_FIELD.GENDER_SELECT.options.map((gender) => (
               <option key={gender} value={gender}>
                 {gender}
               </option>

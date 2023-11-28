@@ -90,7 +90,7 @@ const verifyAssetSymbol = async (symbol) => {
     `${FINANCIAL_MODELING_PREP_ENDPOINT}${symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
   );
   const quote = await response.json();
-  return !isEmpty(quote);
+  return !isEmpty(quote) && !!quote[0].symbol && !!quote[0].name && !!quote[0].price;
 };
 
 const buyOrSellAsset = async (assetData, isBuy, symbol, numShares, pricePerShare) => {

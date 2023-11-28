@@ -77,13 +77,14 @@ const ASSET_FORM_FIELD = {
   },
   SYMBOL: {
     label: 'Symbol',
-    maxLength: 4,
+    maxLength: 6,
     name: 'symbol',
   },
   NUM_SHARES: {
     label: 'Number of shares',
     min: 0,
     name: 'numShares',
+    suffix: 'shares',
     type: 'number',
   },
   PRICE_PER_SHARE: {
@@ -91,6 +92,7 @@ const ASSET_FORM_FIELD = {
     maxLength: 9,
     min: 0,
     name: 'pricePerShare',
+    prefix: '$',
     step: '0.01',
     type: 'number',
   },

@@ -60,7 +60,7 @@ const AssetsTable = ({ setModalContent, userAssets }) => {
                 <td className='assets-table__row-item'>
                   <Button
                     className='assets-table__action-button'
-                    onClick={() => setModalContent({ ...MODAL_CONTENT.BUY_OR_SELL_ASSET.FORM, symbol: asset.symbol })}
+                    onClick={() => setModalContent({ ...MODAL_CONTENT.UPDATE_ASSET.FORM, symbol: asset.symbol })}
                   >
                     <BiTransfer />
                   </Button>

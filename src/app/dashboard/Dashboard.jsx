@@ -9,7 +9,7 @@ import AssetsModal from './AssetsModal';
 import AssetsTable from './AssetsTable';
 import Navbar from '../components/Navbar';
 import Loader from '../components/Loader';
-import { addAsset, buyOrSellAsset, deleteAsset, getUserPortfolioData } from '@/api/assets';
+import { addAsset, updateAsset, deleteAsset, getUserPortfolioData } from '@/api/assets';
 import { formatCurrency, formatPercentage } from '@/utils/helpers';
 import PAGE from '@/utils/routes';
 import { ASSET_FORM_FIELD, DASHBOARD_HEADER_FIELD, MODAL_CONTENT } from './constants';
@@ -39,18 +39,18 @@ const Dashboard = () => {
           event.target.pricePerShare.valueAsNumber
         );
         newModalContent = MODAL_CONTENT.ADD_ASSET.SUCCESS_RESPONSE;
-      } else if (currentModalContent.action === MODAL_CONTENT.BUY_OR_SELL_ASSET.FORM.action) {
-        const isBuy = event.target.buyOrSell.value === ASSET_FORM_FIELD.BUY_RADIO_BUTTON.value;
+      } else if (currentModalContent.action === MODAL_CONTENT.UPDATE_ASSET.FORM.action) {
+        const isBuy = event.target.action.value === ASSET_FORM_FIELD.BUY_RADIO_BUTTON.value;
         const symbol = event.target.symbol.value;
         const userAsset = userPortfolio.assets.find((asset) => asset.symbol === symbol);
-        await buyOrSellAsset(
+        await updateAsset(
           userAsset,
           isBuy,
           symbol,
           event.target.numShares.valueAsNumber,
           event.target.pricePerShare.valueAsNumber
         );
-        newModalContent = MODAL_CONTENT.BUY_OR_SELL_ASSET.SUCCESS_RESPONSE;
+        newModalContent = MODAL_CONTENT.UPDATE_ASSET.SUCCESS_RESPONSE;
       } else if (currentModalContent.action === MODAL_CONTENT.DELETE_ASSET.FORM.action) {
         await deleteAsset(currentModalContent.symbol);
         newModalContent = MODAL_CONTENT.DELETE_ASSET.SUCCESS_RESPONSE;

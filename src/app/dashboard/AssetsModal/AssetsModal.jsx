@@ -30,7 +30,7 @@ const AssetsModal = ({ modalContent, onSubmit, setModalContent }) => {
           <Form id='asset-form' onSubmit={onSubmit}>
             {modalContent.body || (
               <div className='assets-modal__form'>
-                {modalContent.action === MODAL_CONTENT.BUY_OR_SELL_ASSET.FORM.action && (
+                {modalContent.action === MODAL_CONTENT.UPDATE_ASSET.FORM.action && (
                   <div className='assets-modal__form-radio-button-group'>
                     <Form.Check {...ASSET_FORM_FIELD.BUY_RADIO_BUTTON} inline required />
                     <Form.Check {...ASSET_FORM_FIELD.SELL_RADIO_BUTTON} inline required />
@@ -39,14 +39,12 @@ const AssetsModal = ({ modalContent, onSubmit, setModalContent }) => {
                 <Form.Control
                   {...ASSET_FORM_FIELD.SYMBOL_INPUT}
                   className='assets-modal__form-input'
-                  disabled={modalContent.action === MODAL_CONTENT.BUY_OR_SELL_ASSET.FORM.action}
+                  disabled={modalContent.action === MODAL_CONTENT.UPDATE_ASSET.FORM.action}
                   onInput={(event) => (event.target.value = ('' + event.target.value).toUpperCase())}
-                  readOnly={modalContent.action === MODAL_CONTENT.BUY_OR_SELL_ASSET.FORM.action}
+                  readOnly={modalContent.action === MODAL_CONTENT.UPDATE_ASSET.FORM.action}
                   required
                   value={
-                    modalContent.action === MODAL_CONTENT.BUY_OR_SELL_ASSET.FORM.action
-                      ? modalContent.symbol
-                      : undefined
+                    modalContent.action === MODAL_CONTENT.UPDATE_ASSET.FORM.action ? modalContent.symbol : undefined
                   }
                 />
                 <InputGroup className='assets-modal__form-input'>

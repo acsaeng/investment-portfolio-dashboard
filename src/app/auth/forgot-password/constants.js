@@ -2,7 +2,7 @@ const LOGO_IMAGE_ALT = 'Company logo';
 
 const FORM_LABEL = {
   FORM_HEADER: 'Enter your email address below',
-  BACK_LABEL: '< Back',
+  BACK_LABEL: 'Back',
   SUBMIT_LABEL: 'Submit',
 };
 

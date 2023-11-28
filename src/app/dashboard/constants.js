@@ -35,9 +35,9 @@ const MODAL_CONTENT = {
       buttonLabel: 'Done',
     },
   },
-  BUY_OR_SELL_ASSET: {
+  UPDATE_ASSET: {
     FORM: {
-      action: 'buy-or-sell-asset',
+      action: 'update-asset',
       title: 'Buy/sell asset',
       buttonLabel: 'Confirm',
     },
@@ -69,13 +69,13 @@ const MODAL_CONTENT = {
 const ASSET_FORM_FIELD = {
   BUY_RADIO_BUTTON: {
     label: 'Buy',
-    name: 'buyOrSell',
+    name: 'action',
     value: 'buy',
     type: 'radio',
   },
   SELL_RADIO_BUTTON: {
     label: 'Sell',
-    name: 'buyOrSell',
+    name: 'action',
     value: 'sell',
     type: 'radio',
   },

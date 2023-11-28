@@ -1,6 +1,6 @@
 const FORM_LABEL = {
   FORM_HEADER: 'Please enter your information below',
-  BACK_LINK: '< Back',
+  BACK_LINK: 'Back',
   SUBMIT_BUTTON: 'Sign Up',
 };
 

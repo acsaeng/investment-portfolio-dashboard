@@ -93,7 +93,7 @@ const verifyAssetSymbol = async (symbol) => {
   return !isEmpty(quote) && !!quote[0].symbol && !!quote[0].name && !!quote[0].price;
 };
 
-const buyOrSellAsset = async (assetData, isBuy, symbol, numShares, pricePerShare) => {
+const updateAsset = async (assetData, isBuy, symbol, numShares, pricePerShare) => {
   const assetDocRef = doc(database, FIREBASE_COLLECTIONS.ASSETS, `${auth.currentUser.uid}-${symbol}`);
 
   if (!isBuy && numShares > assetData.numShares) {
@@ -115,4 +115,4 @@ const deleteAsset = async (symbol) => {
   await deleteDoc(assetDocRef);
 };
 
-export { addAsset, buyOrSellAsset, deleteAsset, getUserPortfolioData };
+export { addAsset, updateAsset, deleteAsset, getUserPortfolioData };

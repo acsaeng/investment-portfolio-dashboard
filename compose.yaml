@@ -1,0 +1,12 @@
+services:
+  webapp:
+    container_name: webapp
+    build: ./webapp
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY=${NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}
+    ports:
+      - 3000:3000
+    volumes:
+      - ./webapp:/app
+      - /app/node_modules

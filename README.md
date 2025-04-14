@@ -13,4 +13,5 @@ To run the application:
 - Add the required API keys in the `.env` file
 - Ensure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed on your device
 - Build and run the containers by executing the `docker-compose up` command
+- Access http://localhost:3000 in the browser
 - Stop the containers by executing the `docker-compose down` command once finished

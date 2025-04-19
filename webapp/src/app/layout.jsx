@@ -1,8 +1,8 @@
 import './globals.scss';
 
 export const metadata = {
-  title: 'Login Page',
-  description: 'Generic login template',
+  title: 'Investment Portfolio Dashboard',
+  description: 'A dashboard designed to keep track of all your investments',
 };
 
 const RootLayout = ({ children }) => {

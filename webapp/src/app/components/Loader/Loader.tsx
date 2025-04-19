@@ -1,18 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Spinner } from 'react-bootstrap';
 
 import './Loader.scss';
 
-const Loader = ({ isVisible = true }) =>
-  isVisible && (
+interface LoaderProps {
+  isVisible?: boolean;
+}
+
+const Loader: React.FC<LoaderProps> = ({ isVisible = true }) =>
+  isVisible ? (
     <div className='loader'>
       <Spinner animation='border' className='loader__spinner' variant='light' />
     </div>
-  );
-
-Loader.propTypes = {
-  isVisible: PropTypes.bool,
-};
+  ) : null;
 
 export default Loader;

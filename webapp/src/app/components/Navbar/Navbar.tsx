@@ -7,7 +7,7 @@ import PAGE from '@/utils/routes';
 import { COMPANY_NAME, SIGN_OUT_LINK_LABEL } from './constants';
 import './Navbar.scss';
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const router = useRouter();
 
   const onSignOut = async () => {
@@ -18,13 +18,13 @@ const Navbar = () => {
   return (
     <BootstrapNavbar className='navbar'>
       <Container>
-        <BootstrapNavbar.Brand className='navbar__brand' href={PAGE.DASHBOARD}>
+        <BootstrapNavbar.Brand className='brand' href={PAGE.DASHBOARD}>
           {COMPANY_NAME}
         </BootstrapNavbar.Brand>
         <BootstrapNavbar.Toggle />
-        <BootstrapNavbar.Collapse className='navbar__collapse'>
+        <BootstrapNavbar.Collapse className='collapse'>
           <BootstrapNavbar.Text>
-            <Link className='navbar__sign-out-link' href={PAGE.SIGN_IN} onClick={() => onSignOut()}>
+            <Link className='sign-out-link' href={PAGE.SIGN_IN} onClick={onSignOut}>
               {SIGN_OUT_LINK_LABEL}
             </Link>
           </BootstrapNavbar.Text>

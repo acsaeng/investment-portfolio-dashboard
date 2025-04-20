@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal as BootstrapModal } from 'react-bootstrap';
 
-const Modal = ({
+interface ModalProps {
+  buttonAttributes: React.ComponentProps<typeof Button>;
+  buttonLabel: string;
+  children: ReactNode;
+  closeButton: boolean;
+  isVisible: boolean;
+  onHide: () => void;
+  title: string;
+}
+
+const Modal: React.FC<ModalProps> = ({
   buttonAttributes = {},
   buttonLabel = '',
   children,
@@ -25,15 +35,5 @@ const Modal = ({
     )}
   </BootstrapModal>
 );
-
-Modal.propTypes = {
-  buttonAttributes: PropTypes.shape(),
-  buttonLabel: PropTypes.string,
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
-  closeButton: PropTypes.bool,
-  isVisible: PropTypes.bool,
-  onHide: PropTypes.func,
-  title: PropTypes.string,
-};
 
 export default Modal;

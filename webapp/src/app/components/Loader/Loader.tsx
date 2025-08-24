@@ -10,7 +10,7 @@ interface LoaderProps {
 const Loader: React.FC<LoaderProps> = ({ isVisible = true }) =>
   isVisible ? (
     <div className='loader'>
-      <Spinner animation='border' className='loader__spinner' variant='light' />
+      <Spinner animation='border' className='spinner' variant='light' />
     </div>
   ) : null;
 

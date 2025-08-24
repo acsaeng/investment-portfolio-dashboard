@@ -13,15 +13,19 @@ import CompanyLogo from '../../../img/logo.jpg';
 import { EMAIL_FORM_FIELD, FORM_LABEL, LOGO_IMAGE_ALT, MODAL_LABEL } from './constants';
 import './ForgotPassword.scss';
 
-const ForgotPassword = () => {
+const ForgotPassword: React.FC = () => {
   const [showLoader, setShowLoader] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const router = useRouter();
 
-  const onSubmit = async (event) => {
-    setShowLoader(true);
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await resetPassword(event.target.email.value);
+    setShowLoader(true);
+
+    const formData = new FormData(event.currentTarget);
+    const email = formData.get('email') as string;
+    await resetPassword(email);
+    
     setShowSuccessModal(true);
     setShowLoader(false);
   };

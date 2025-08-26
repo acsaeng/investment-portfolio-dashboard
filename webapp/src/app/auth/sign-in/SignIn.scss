@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
 
-  &__container {
+  .container {
     display: flex;
     flex-direction: column;
     width: 600px;
@@ -23,34 +23,34 @@
     }
   }
 
-  &__logo {
+  .logo {
     width: 300px;
     height: auto;
     margin-bottom: 10px;
   }
 
-  &__title {
+  .title {
     margin-bottom: 30px;
   }
 
-  &__form {
+  .form {
     flex-direction: column;
     width: 100%;
   }
 
-  &__input {
+  .input {
     margin-bottom: 10px;
   }
 
-  &__message-and-ctas-container {
+  .message-and-ctas-container {
     display: flex;
   }
 
-  &__links-container {
+  .links-container {
     font-size: 12px;
   }
 
-  &__account-link {
+  .account-link {
     text-decoration: none;
 
     &:hover {
@@ -58,7 +58,7 @@
     }
   }
 
-  &__delimiter {
+  .delimiter {
     margin: 0 5px;
     color: darkgrey;
     font-weight: 700;
@@ -68,7 +68,7 @@
     }
   }
 
-  &__sign-in-button {
+  .sign-in-button {
     margin-left: auto;
   }
 }

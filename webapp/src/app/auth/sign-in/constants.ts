@@ -5,7 +5,7 @@ const FORM_LABEL = {
   SIGN_UP_LABEL: 'Sign up',
   FORGOT_PASSWORD_LABEL: 'Forgot password?',
   SUBMIT_BUTTON_LABEL: 'Sign In',
-};
+} as const;
 
 const FORM_FIELD = {
   EMAIL_INPUT: {
@@ -19,12 +19,12 @@ const FORM_FIELD = {
     placeholder: 'Password',
     type: 'password',
   },
-};
+} as const;
 
 const MODAL_LABEL = {
   TITLE: 'Error',
   BODY: 'The email address or password is invalid',
   BUTTON: 'Continue',
-};
+} as const;
 
 export { FORM_FIELD, FORM_LABEL, LOGO_IMAGE_ALT, MODAL_LABEL };

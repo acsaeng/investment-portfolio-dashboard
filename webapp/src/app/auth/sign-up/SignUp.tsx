@@ -12,34 +12,44 @@ import PAGE from '@/utils/routes';
 import { FORM_FIELD, FORM_LABEL, MODAL_LABEL } from './constants';
 import './SignUp.scss';
 
-const SignUp = () => {
+interface ModalContent {
+  title?: string;
+  body?: string;
+  button?: string;
+  buttonEvent?: () => void;
+  href?: string;
+}
+
+const SignUp: React.FC = () => {
   const [showLoader, setShowLoader] = useState(false);
-  const [modalContent, setModalContent] = useState({});
+  const [modalContent, setModalContent] = useState<ModalContent>({});
   const router = useRouter();
 
-  const onSubmit = async (event) => {
-    setShowLoader(true);
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setShowLoader(true);
+
+    const formData = new FormData(event.currentTarget);
+    const firstName = formData.get('firstName') as string;
+    const lastName = formData.get('lastName') as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const dob = formData.get('dob') as string;
+    const gender = formData.get('gender') as string;
 
     try {
-      await signUpUser(
-        event.target.firstName.value,
-        event.target.lastName.value,
-        event.target.email.value,
-        event.target.password.value,
-        event.target.dob.value,
-        event.target.gender.value
-      );
+      await signUpUser(firstName, lastName, email, password, dob, gender);
       setModalContent({
         title: MODAL_LABEL.SUCCESS.TITLE,
         body: MODAL_LABEL.SUCCESS.BODY,
         button: MODAL_LABEL.SUCCESS.BUTTON,
         buttonEvent: () => router.push(PAGE.SIGN_IN),
       });
-    } catch (error) {
+    } catch (error: any) {
       const errorMessage = error.message
         .substring(error.message.indexOf('/') + 1, error.message.lastIndexOf(')'))
         .replaceAll('-', ' ');
+      
       setModalContent({
         title: MODAL_LABEL.ERROR.TITLE,
         body: errorMessage
@@ -59,29 +69,29 @@ const SignUp = () => {
   }, []);
 
   return (
-    <div className='sign-up'>
+    <div className="sign-up">
       <Loader isVisible={showLoader} />
-      <div className='sign-up__container'>
-        <Link className='sign-up__back-button' href={PAGE.SIGN_IN}>
+      <div className="container">
+        <Link className="back-button" href={PAGE.SIGN_IN}>
           {FORM_LABEL.BACK_LINK}
         </Link>
-        <h6 className='sign-up__header'>{FORM_LABEL.FORM_HEADER}</h6>
-        <Form className='sign-up__form' onSubmit={onSubmit}>
-          <div className='sign-up__name-inputs-container'>
-            <Form.Control {...FORM_FIELD.FIRST_NAME_INPUT} className='sign-up__first-name-input' required />
-            <Form.Control {...FORM_FIELD.LAST_NAME_INPUT} className='sign-up__last-name-input' required />
+        <h6 className="header">{FORM_LABEL.FORM_HEADER}</h6>
+        <Form className="form" onSubmit={onSubmit}>
+          <div className="name-inputs-container">
+            <Form.Control {...FORM_FIELD.FIRST_NAME_INPUT} className="first-name-input" required />
+            <Form.Control {...FORM_FIELD.LAST_NAME_INPUT} className="last-name-input" required />
           </div>
-          <Form.Control {...FORM_FIELD.EMAIL_INPUT} className='sign-up__email-input' required />
-          <Form.Control {...FORM_FIELD.PASSWORD_INPUT} className='sign-up__password-input' required />
-          <Form.Control {...FORM_FIELD.DOB_INPUT} className='sign-up__dob-input' required />
-          <Form.Select {...FORM_FIELD.GENDER_SELECT} className='sign-up__gender-input' required>
+          <Form.Control {...FORM_FIELD.EMAIL_INPUT} className="email-input" required />
+          <Form.Control {...FORM_FIELD.PASSWORD_INPUT} className="password-input" required />
+          <Form.Control {...FORM_FIELD.DOB_INPUT} className="dob-input" required />
+          <Form.Select {...FORM_FIELD.GENDER_SELECT} className="gender-input" required>
             {FORM_FIELD.GENDER_SELECT.options.map((gender) => (
               <option key={gender} value={gender}>
                 {gender}
               </option>
             ))}
           </Form.Select>
-          <Button className='sign-up__submit-button' type='submit'>
+          <Button className="submit-button" type="submit">
             {FORM_LABEL.SUBMIT_BUTTON}
           </Button>
         </Form>

@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
 
-  &__container {
+  .container {
     display: flex;
     flex-direction: column;
     width: 600px;
@@ -23,7 +23,7 @@
     }
   }
 
-  &__back-button {
+  .back-button {
     align-self: start;
     margin-bottom: 20px;
     font-size: 12px;
@@ -38,18 +38,18 @@
     }
   }
 
-  &__header {
+  .header {
     align-self: start;
     margin-bottom: 15px;
   }
 
-  &__form {
+  .form {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
 
-  &__name-inputs-container {
+  .name-inputs-container {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
@@ -59,7 +59,7 @@
     }
   }
 
-  &__first-name-input {
+  .first-name-input {
     margin-bottom: 10px;
 
     @include media-breakpoint-up(md) {
@@ -67,20 +67,20 @@
     }
   }
 
-  &__last-name-input {
+  .last-name-input {
     @include media-breakpoint-up(md) {
       margin-left: 5px;
     }
   }
 
-  &__email-input,
-  &__password-input,
-  &__dob-input,
-  &__gender-input {
+  .email-input,
+  .password-input,
+  .dob-input,
+  .gender-input {
     margin-bottom: 10px;
   }
 
-  &__submit-button {
+  .submit-button {
     margin-left: auto;
   }
 }

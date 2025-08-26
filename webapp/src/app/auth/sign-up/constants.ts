@@ -2,7 +2,7 @@ const FORM_LABEL = {
   FORM_HEADER: 'Please enter your information below',
   BACK_LINK: 'Back',
   SUBMIT_BUTTON: 'Sign Up',
-};
+} as const;
 
 const FORM_FIELD = {
   FIRST_NAME_INPUT: {
@@ -40,7 +40,7 @@ const FORM_FIELD = {
     name: 'gender',
     options: ['Male', 'Female', 'Other'],
   },
-};
+} as const;
 
 const MODAL_LABEL = {
   SUCCESS: {
@@ -53,6 +53,6 @@ const MODAL_LABEL = {
     DEFAULT_BODY: 'An error occurred.',
     BUTTON: 'Continue',
   },
-};
+} as const;
 
 export { FORM_FIELD, FORM_LABEL, MODAL_LABEL };

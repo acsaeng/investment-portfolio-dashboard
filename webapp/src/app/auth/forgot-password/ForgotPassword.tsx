@@ -35,23 +35,23 @@ const ForgotPassword: React.FC = () => {
   }, []);
 
   return (
-    <div className='forgot-password'>
+    <div className="forgot-password">
       <Loader isVisible={showLoader} />
-      <div className='forgot-password__container'>
-        <Link className='forgot-password__back-button' href={PAGE.SIGN_IN}>
+      <div className="container">
+        <Link className="back-button" href={PAGE.SIGN_IN}>
           {FORM_LABEL.BACK_LABEL}
         </Link>
         <Image
           alt={LOGO_IMAGE_ALT}
-          className='forgot-password__logo'
-          placeholder='blur'
+          className="logo"
+          placeholder="blur"
           quality={100}
           src={CompanyLogo}
         />
-        <h6 className='forgot-password__header'>{FORM_LABEL.FORM_HEADER}</h6>
-        <Form className='forgot-password__form' onSubmit={onSubmit}>
-          <Form.Control {...EMAIL_FORM_FIELD} className='forgot-password__email-input' required />
-          <Button className='forgot-password__submit-button' type='submit'>
+        <h6 className="header">{FORM_LABEL.FORM_HEADER}</h6>
+        <Form className="form" onSubmit={onSubmit}>
+          <Form.Control {...EMAIL_FORM_FIELD} className="email-input" required />
+          <Button className="submit-button" type="submit">
             {FORM_LABEL.SUBMIT_LABEL}
           </Button>
         </Form>

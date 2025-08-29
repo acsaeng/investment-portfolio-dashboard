@@ -5,24 +5,30 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  UserCredential,
 } from 'firebase/auth';
 import { saveUserData } from './users';
 
-const signUpUser = async (firstName, lastName, email, password, dob, gender) => {
+type Gender = 'male' | 'female' | 'other';
+
+const signUpUser = async (firstName: string, lastName: string, email: string, password: string, dob: string, gender: Gender): Promise<void> => {
   await createUserWithEmailAndPassword(auth, email, password);
   await saveUserData(firstName, lastName, email, dob, gender);
-  await sendEmailVerification(auth.currentUser);
+
+  if (auth.currentUser) {
+    await sendEmailVerification(auth.currentUser);
+  }
 };
 
-const signInUser = async (email, password) => {
+const signInUser = async (email: string, password: string): Promise<UserCredential> => {
   return await signInWithEmailAndPassword(auth, email, password);
 };
 
-const signOutUser = async () => {
+const signOutUser = async (): Promise<void> => {
   await signOut(auth);
 };
 
-const resetPassword = async (email) => {
+const resetPassword = async (email: string): Promise<void> => {
   await sendPasswordResetEmail(auth, email);
 };
 

@@ -1,10 +1,33 @@
 import { auth, database } from '@/config/firebase';
-import { collection, deleteDoc, doc, getDocs, orderBy, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, orderBy, query, QueryDocumentSnapshot, setDoc, updateDoc, where } from 'firebase/firestore';
 import { isEmpty } from 'lodash';
 import { FINANCIAL_MODELING_PREP_ENDPOINT, FIREBASE_COLLECTIONS } from '@/utils/endpoints';
 
-const getUserPortfolioData = async () => {
-  let userAssetsWithQuoteData;
+interface Asset {
+  userUid: string;
+  symbol: string;
+  numShares: number;
+  amountSpent: number;
+  currency: string;
+}
+
+interface AssetWithQuoteData extends Asset {
+  name: string;
+  price: number;
+  totalValue: number;
+  returnAmount: number;
+  returnPct: number;
+}
+
+interface PortfolioData {
+  assets: AssetWithQuoteData[];
+  returnAmount: number;
+  returnPct: number;
+  totalValue: number;
+}
+
+const getUserPortfolioData = async (): Promise<PortfolioData> => {
+  let userAssetsWithQuoteData: AssetWithQuoteData[];
 
   try {
     const userAssets = await getUserAssets();
@@ -22,7 +45,6 @@ const getUserPortfolioData = async () => {
     totalAmountSpent += asset.amountSpent;
   });
 
-  totalValue = totalValue;
   const returnAmount = totalValue - totalAmountSpent;
   const returnPct = (returnAmount / totalValue) * 100;
 
@@ -34,31 +56,29 @@ const getUserPortfolioData = async () => {
   };
 };
 
-// Get user assets data from the database
-const getUserAssets = async () => {
+const getUserAssets = async (): Promise<Asset[]> => {
   const assetsRef = collection(database, FIREBASE_COLLECTIONS.ASSETS);
-  const assetsQuery = query(assetsRef, where('userUid', '==', auth.currentUser.uid), orderBy('symbol', 'asc'));
+  const assetsQuery = query(assetsRef, where('userUid', '==', auth.currentUser?.uid), orderBy('symbol', 'asc'));
   const querySnapshot = await getDocs(assetsQuery);
 
-  return querySnapshot.docs.map((doc) => doc.data());
+  return querySnapshot.docs.map((doc: QueryDocumentSnapshot) => doc.data() as Asset);
 };
 
-// Get the real-time quote data for each user asset
-const getQuoteData = async (assets) => {
+const getQuoteData = async (assets: Asset[]): Promise<AssetWithQuoteData[]> => {
   return await Promise.all(
     assets.map(async (asset) => {
       const response = await fetch(
         `${FINANCIAL_MODELING_PREP_ENDPOINT}${asset.symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
       );
       const quote = await response.json();
-      const price = quote[0].price;
+      const price = quote[0].price as number;
       const totalValue = asset.numShares * price;
       const returnAmount = totalValue - asset.amountSpent;
       const returnPct = (returnAmount / totalValue) * 100;
 
       return {
         ...asset,
-        name: quote[0].name,
+        name: quote[0].name as string,
         price,
         totalValue,
         returnAmount,
@@ -68,24 +88,24 @@ const getQuoteData = async (assets) => {
   );
 };
 
-const addAsset = async (userAssetHoldings, symbol, numShares, pricePerShare) => {
+const addAsset = async (userAssetHoldings: string[], symbol: string, numShares: number, pricePerShare: number): Promise<void> => {
   if (userAssetHoldings.includes(symbol)) {
     throw new Error('Asset already exists in your portfolio.');
   } else if (await verifyAssetSymbol(symbol)) {
-    const assetDocRef = doc(database, FIREBASE_COLLECTIONS.ASSETS, `${auth.currentUser.uid}-${symbol}`);
+    const assetDocRef = doc(database, FIREBASE_COLLECTIONS.ASSETS, `${auth.currentUser?.uid}-${symbol}`);
     await setDoc(assetDocRef, {
       amountSpent: numShares * pricePerShare,
       currency: 'USD',
       numShares,
       symbol,
-      userUid: auth.currentUser.uid,
-    });
+      userUid: auth.currentUser?.uid,
+    } as Asset);
   } else {
     throw new Error('Asset could not be found.');
   }
 };
 
-const verifyAssetSymbol = async (symbol) => {
+const verifyAssetSymbol = async (symbol: string): Promise<boolean> => {
   const response = await fetch(
     `${FINANCIAL_MODELING_PREP_ENDPOINT}${symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
   );
@@ -93,8 +113,8 @@ const verifyAssetSymbol = async (symbol) => {
   return !isEmpty(quote) && !!quote[0].symbol && !!quote[0].name && !!quote[0].price;
 };
 
-const updateAsset = async (assetData, isBuy, symbol, numShares, pricePerShare) => {
-  const assetDocRef = doc(database, FIREBASE_COLLECTIONS.ASSETS, `${auth.currentUser.uid}-${symbol}`);
+const updateAsset = async (assetData: Asset, isBuy: boolean, symbol: string, numShares: number, pricePerShare: number): Promise<void> => {
+  const assetDocRef = doc(database, FIREBASE_COLLECTIONS.ASSETS, `${auth.currentUser?.uid}-${symbol}`);
 
   if (!isBuy && numShares > assetData.numShares) {
     throw new Error('Cannot sell more shares than you own.');
@@ -110,8 +130,8 @@ const updateAsset = async (assetData, isBuy, symbol, numShares, pricePerShare) =
   }
 };
 
-const deleteAsset = async (symbol) => {
-  const assetDocRef = doc(database, FIREBASE_COLLECTIONS.ASSETS, `${auth.currentUser.uid}-${symbol}`);
+const deleteAsset = async (symbol: string): Promise<void> => {
+  const assetDocRef = doc(database, FIREBASE_COLLECTIONS.ASSETS, `${auth.currentUser?.uid}-${symbol}`);
   await deleteDoc(assetDocRef);
 };
 

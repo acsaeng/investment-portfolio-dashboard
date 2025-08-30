@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { Button, Modal as BootstrapModal } from 'react-bootstrap';
 
 interface ModalProps {

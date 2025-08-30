@@ -1,17 +1,17 @@
-@import '../../../scss/base-import';
+@import "../../../scss/base-import";
 
 .assets-modal {
-  &__form {
+  .form {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  &__form-radio-button-group {
+  .form-radio-button-group {
     margin-bottom: 10px;
   }
 
-  &__form-input {
+  .form-input {
     width: 300px !important;
     margin-bottom: 10px;
   }
@@ -24,6 +24,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }

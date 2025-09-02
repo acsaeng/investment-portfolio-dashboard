@@ -2,24 +2,14 @@ import React from "react";
 import { isEmpty } from "lodash";
 import { Button, Table } from "react-bootstrap";
 import { BiSolidTrash, BiTransfer } from "react-icons/bi";
+import { AssetWithQuoteData } from "@/api/assets";
 import { formatCurrency, formatPercentage } from "@/utils/helpers";
 import { MODAL_CONTENT, TABLE_FIELD } from "../constants";
 import "./AssetsTable.scss";
 
-interface Asset {
-  symbol: string;
-  name: string;
-  price: number;
-  currency: string;
-  totalValue: number;
-  numShares: number;
-  returnAmount: number;
-  returnPct: number;
-}
-
 interface AssetsTableProps {
   setModalContent: (content: any) => void;
-  userAssets: Asset[];
+  userAssets: AssetWithQuoteData[];
 }
 
 const AssetsTable: React.FC<AssetsTableProps> = ({

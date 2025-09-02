@@ -5,18 +5,18 @@ import Modal from "@/app/components/Modal";
 import { ASSET_FORM_FIELD, MODAL_CONTENT } from "../constants";
 import "./AssetsModal.scss";
 
-type ModalContent = {
+export interface ModalContent {
   action?: string;
   body?: React.ReactNode;
   buttonLabel?: string;
   symbol?: string;
   title?: string;
-};
+}
 
 interface AssetsModalProps {
   modalContent: ModalContent;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  setModalContent: (content: Partial<ModalContent> | {}) => void;
+  setModalContent: React.Dispatch<React.SetStateAction<ModalContent>>;
 }
 
 const AssetsModal: React.FC<AssetsModalProps> = ({

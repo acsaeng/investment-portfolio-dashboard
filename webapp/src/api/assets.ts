@@ -88,7 +88,7 @@ const getQuoteData = async (assets: Asset[]): Promise<AssetWithQuoteData[]> => {
   return await Promise.all(
     assets.map(async (asset) => {
       const response = await fetch(
-        `${FINANCIAL_MODELING_PREP_ENDPOINT}${asset.symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
+        `${FINANCIAL_MODELING_PREP_ENDPOINT}?symbol=${asset.symbol}&apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
       );
       const quote = await response.json();
       const price = quote[0].price as number;
@@ -136,7 +136,7 @@ const addAsset = async (
 
 const verifyAssetSymbol = async (symbol: string): Promise<boolean> => {
   const response = await fetch(
-    `${FINANCIAL_MODELING_PREP_ENDPOINT}${symbol}?apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
+    `${FINANCIAL_MODELING_PREP_ENDPOINT}?symbol=${symbol}&apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
   );
   const quote = await response.json();
   return (

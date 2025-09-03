@@ -62,6 +62,7 @@ const MODAL_CONTENT = {
   },
   ERROR_RESPONSE: {
     title: "Error",
+    body: "Sorry, this asset could not be added.",
     buttonLabel: "Continue",
   },
 } as const;

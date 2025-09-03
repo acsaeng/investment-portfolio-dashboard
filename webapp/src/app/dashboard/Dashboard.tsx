@@ -94,11 +94,8 @@ const Dashboard: React.FC = () => {
       }
 
       setUserPortfolio(await getUserPortfolioData());
-    } catch (error: any) {
-      newModalContent = {
-        ...MODAL_CONTENT.ERROR_RESPONSE,
-        body: error.message,
-      };
+    } catch {
+      newModalContent = MODAL_CONTENT.ERROR_RESPONSE;
     }
 
     setShowLoader(false);

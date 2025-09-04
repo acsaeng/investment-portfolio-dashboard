@@ -8,6 +8,7 @@ import { Button, Form } from "react-bootstrap";
 import Loader from "@/app/components/Loader/Loader";
 import Modal from "@/app/components/Modal";
 import { signOutUser, signUpUser } from "@/api/auth";
+import { Gender } from "@/api/users";
 import PAGE from "@/utils/routes";
 import { FORM_FIELD, FORM_LABEL, MODAL_LABEL } from "./constants";
 import "./SignUp.scss";
@@ -35,7 +36,7 @@ const SignUp: React.FC = () => {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const dob = formData.get("dob") as string;
-    const gender = formData.get("gender") as string;
+    const gender = formData.get("gender") as Gender;
 
     try {
       await signUpUser(firstName, lastName, email, password, dob, gender);

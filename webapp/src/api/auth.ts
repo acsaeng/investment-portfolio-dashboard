@@ -1,4 +1,4 @@
-import { auth } from '../config/firebase';
+import { auth } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -6,12 +6,17 @@ import {
   signInWithEmailAndPassword,
   signOut,
   UserCredential,
-} from 'firebase/auth';
-import { saveUserData } from './users';
+} from "firebase/auth";
+import { Gender, saveUserData } from "./users";
 
-type Gender = 'male' | 'female' | 'other';
-
-const signUpUser = async (firstName: string, lastName: string, email: string, password: string, dob: string, gender: Gender): Promise<void> => {
+const signUpUser = async (
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  dob: string,
+  gender: Gender
+): Promise<void> => {
   await createUserWithEmailAndPassword(auth, email, password);
   await saveUserData(firstName, lastName, email, dob, gender);
 
@@ -20,7 +25,10 @@ const signUpUser = async (firstName: string, lastName: string, email: string, pa
   }
 };
 
-const signInUser = async (email: string, password: string): Promise<UserCredential> => {
+const signInUser = async (
+  email: string,
+  password: string
+): Promise<UserCredential> => {
   return await signInWithEmailAndPassword(auth, email, password);
 };
 

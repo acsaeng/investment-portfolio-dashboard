@@ -7,7 +7,7 @@ const TABLE_FIELD = {
   TITLE: "Your portfolio",
   HEADER: {
     symbol: "",
-    assetPrice: "Current price",
+    holdingPrice: "Current price",
     totalValue: "Total value",
     return: "All time return",
     actions: "",
@@ -17,57 +17,57 @@ const TABLE_FIELD = {
     sharesSuffix: "shares",
   },
   BUTTON_LABEL: {
-    addAsset: "Add asset",
+    addHolding: "Add holding",
   },
   NO_DATA_RESPONSE: "No data to show",
 } as const;
 
 const MODAL_CONTENT = {
-  ADD_ASSET: {
+  ADD_HOLDING: {
     FORM: {
-      action: "add-asset",
-      title: "Add new asset",
+      action: "add-holding",
+      title: "Add new holding",
       buttonLabel: "Add",
     },
     SUCCESS_RESPONSE: {
       title: "Success!",
-      body: "The asset has been added to your portfolio.",
+      body: "The holding has been added to your portfolio.",
       buttonLabel: "Done",
     },
   },
-  UPDATE_ASSET: {
+  UPDATE_HOLDING: {
     FORM: {
-      action: "update-asset",
-      title: "Buy/sell asset",
+      action: "update-holding",
+      title: "Buy/sell holding",
       buttonLabel: "Confirm",
     },
     SUCCESS_RESPONSE: {
       title: "Success!",
-      body: "The asset has been updated in your portfolio.",
+      body: "The holding has been updated in your portfolio.",
       buttonLabel: "Done",
     },
   },
-  DELETE_ASSET: {
+  DELETE_HOLDING: {
     FORM: {
-      action: "delete-asset",
-      title: "Delete asset",
-      body: "Click 'Confirm' if you wish to delete this asset",
+      action: "delete-holding",
+      title: "Delete holding",
+      body: "Click 'Confirm' if you wish to delete this holding",
       buttonLabel: "Confirm",
     },
     SUCCESS_RESPONSE: {
       title: "Success!",
-      body: "The asset has been deleted from your portfolio.",
+      body: "The holding has been deleted from your portfolio.",
       buttonLabel: "Done",
     },
   },
   ERROR_RESPONSE: {
     title: "Error",
-    body: "Sorry, this asset could not be added.",
+    body: "Sorry, this holding could not be added.",
     buttonLabel: "Continue",
   },
 } as const;
 
-const ASSET_FORM_FIELD = {
+const HOLDING_FORM_FIELD = {
   BUY_RADIO_BUTTON: {
     label: "Buy",
     name: "action",
@@ -103,4 +103,9 @@ const ASSET_FORM_FIELD = {
   },
 } as const;
 
-export { ASSET_FORM_FIELD, DASHBOARD_HEADER_FIELD, MODAL_CONTENT, TABLE_FIELD };
+export {
+  HOLDING_FORM_FIELD,
+  DASHBOARD_HEADER_FIELD,
+  MODAL_CONTENT,
+  TABLE_FIELD,
+};

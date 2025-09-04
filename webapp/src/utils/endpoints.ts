@@ -1,5 +1,5 @@
 const FIREBASE_COLLECTIONS = {
-  ASSETS: "assets",
+  HOLDINGS: "holdings",
   USERS: "users",
 } as const;
 

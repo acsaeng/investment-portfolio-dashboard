@@ -2,31 +2,31 @@ import React from "react";
 import { isEmpty } from "lodash";
 import { Button, Table } from "react-bootstrap";
 import { BiSolidTrash, BiTransfer } from "react-icons/bi";
-import { AssetWithQuoteData } from "@/api/assets";
+import { HoldingWithQuoteData } from "@/api/holdings";
 import { formatCurrency, formatPercentage } from "@/utils/helpers";
 import { MODAL_CONTENT, TABLE_FIELD } from "../constants";
-import "./AssetsTable.scss";
+import "./HoldingsTable.scss";
 
-interface AssetsTableProps {
+interface HoldingsTableProps {
   setModalContent: (content: any) => void;
-  userAssets: AssetWithQuoteData[];
+  userHoldings: HoldingWithQuoteData[];
 }
 
-const AssetsTable: React.FC<AssetsTableProps> = ({
+const HoldingsTable: React.FC<HoldingsTableProps> = ({
   setModalContent,
-  userAssets,
+  userHoldings,
 }) => {
   return (
-    <div className="assets-table">
+    <div className="holdings-table">
       <div className="header">
         <span className="title">{TABLE_FIELD.TITLE}</span>
         <Button
-          className="add-asset-button"
+          className="add-holding-button"
           onClick={() => {
-            setModalContent(MODAL_CONTENT.ADD_ASSET.FORM);
+            setModalContent(MODAL_CONTENT.ADD_HOLDING.FORM);
           }}
         >
-          {TABLE_FIELD.BUTTON_LABEL.addAsset}
+          {TABLE_FIELD.BUTTON_LABEL.addHolding}
         </Button>
       </div>
       <Table className="table" striped hover>
@@ -35,7 +35,7 @@ const AssetsTable: React.FC<AssetsTableProps> = ({
             <th className="heading heading--blank">
               {TABLE_FIELD.HEADER.symbol}
             </th>
-            <th className="heading">{TABLE_FIELD.HEADER.assetPrice}</th>
+            <th className="heading">{TABLE_FIELD.HEADER.holdingPrice}</th>
             <th className="heading">{TABLE_FIELD.HEADER.totalValue}</th>
             <th className="heading">{TABLE_FIELD.HEADER.return}</th>
             <th className="heading heading--blank">
@@ -44,37 +44,37 @@ const AssetsTable: React.FC<AssetsTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {!isEmpty(userAssets) ? (
-            userAssets.map((asset) => (
-              <tr className="table-row" key={asset.symbol}>
+          {!isEmpty(userHoldings) ? (
+            userHoldings.map((holding) => (
+              <tr className="table-row" key={holding.symbol}>
                 <td className="row-item">
-                  <span className="field">{asset.symbol}</span>
+                  <span className="field">{holding.symbol}</span>
                   <br />
-                  <span className="field field--name">{asset.name}</span>
+                  <span className="field field--name">{holding.name}</span>
                 </td>
                 <td className="row-item">
-                  <span className="field">{formatCurrency(asset.price)}</span>
+                  <span className="field">{formatCurrency(holding.price)}</span>
                   <br />
-                  <span className="field">{asset.currency}</span>
+                  <span className="field">{holding.currency}</span>
                 </td>
                 <td className="row-item">
                   <span className="field">
-                    {formatCurrency(asset.totalValue)}
+                    {formatCurrency(holding.totalValue)}
                   </span>
                   <br />
-                  <span className="field">{`${asset.numShares} ${
-                    asset.numShares === 1
+                  <span className="field">{`${holding.numShares} ${
+                    holding.numShares === 1
                       ? TABLE_FIELD.ITEM_LABEL.shareSuffix
                       : TABLE_FIELD.ITEM_LABEL.sharesSuffix
                   }`}</span>
                 </td>
                 <td className="row-item">
                   <span className="field">
-                    {formatCurrency(asset.returnAmount)}
+                    {formatCurrency(holding.returnAmount)}
                   </span>
                   <br />
                   <span className="field">
-                    {formatPercentage(asset.returnPct)}
+                    {formatPercentage(holding.returnPct)}
                   </span>
                 </td>
                 <td className="row-item">
@@ -82,8 +82,8 @@ const AssetsTable: React.FC<AssetsTableProps> = ({
                     className="action-button"
                     onClick={() =>
                       setModalContent({
-                        ...MODAL_CONTENT.UPDATE_ASSET.FORM,
-                        symbol: asset.symbol,
+                        ...MODAL_CONTENT.UPDATE_HOLDING.FORM,
+                        symbol: holding.symbol,
                       })
                     }
                   >
@@ -93,8 +93,8 @@ const AssetsTable: React.FC<AssetsTableProps> = ({
                     className="action-button"
                     onClick={() =>
                       setModalContent({
-                        ...MODAL_CONTENT.DELETE_ASSET.FORM,
-                        symbol: asset.symbol,
+                        ...MODAL_CONTENT.DELETE_HOLDING.FORM,
+                        symbol: holding.symbol,
                       })
                     }
                   >
@@ -116,4 +116,4 @@ const AssetsTable: React.FC<AssetsTableProps> = ({
   );
 };
 
-export default AssetsTable;
+export default HoldingsTable;

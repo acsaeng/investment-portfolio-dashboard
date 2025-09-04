@@ -4,29 +4,29 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/config/firebase";
-import AssetsModal from "./AssetsModal";
-import { ModalContent } from "./AssetsModal/AssetsModal";
-import AssetsTable from "./AssetsTable";
+import HoldingsModal from "./HoldingsModal";
+import { ModalContent } from "./HoldingsModal/HoldingsModal";
+import HoldingsTable from "./HoldingsTable";
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
 import {
-  AssetWithQuoteData,
-  addAsset,
-  updateAsset,
-  deleteAsset,
+  HoldingWithQuoteData,
+  addHolding,
+  updateHolding,
+  deleteHolding,
   getUserPortfolioData,
-} from "@/api/assets";
+} from "@/api/holdings";
 import { formatCurrency, formatPercentage } from "@/utils/helpers";
 import PAGE from "@/utils/routes";
 import {
-  ASSET_FORM_FIELD,
+  HOLDING_FORM_FIELD,
   DASHBOARD_HEADER_FIELD,
   MODAL_CONTENT,
 } from "./constants";
 import "./Dashboard.scss";
 
 interface UserPortfolio {
-  assets: AssetWithQuoteData[];
+  holdings: HoldingWithQuoteData[];
   totalValue: number;
   returnAmount: number;
   returnPct: number;
@@ -41,7 +41,7 @@ const Dashboard: React.FC = () => {
   const [showLoader, setShowLoader] = useState(false);
   const router = useRouter();
 
-  const onSubmitAsset = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitHolding = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const currentModalContent = modalContent;
@@ -60,37 +60,45 @@ const Dashboard: React.FC = () => {
         form.elements.namedItem("pricePerShare") as HTMLInputElement
       )?.valueAsNumber;
 
-      if (currentModalContent.action === MODAL_CONTENT.ADD_ASSET.FORM.action) {
-        await addAsset(
-          userPortfolio?.assets.map((asset) => asset.symbol) ?? [],
+      if (
+        currentModalContent.action === MODAL_CONTENT.ADD_HOLDING.FORM.action
+      ) {
+        await addHolding(
+          userPortfolio?.holdings.map((holding) => holding.symbol) ?? [],
           symbol,
           numShares,
           pricePerShare
         );
-        newModalContent = MODAL_CONTENT.ADD_ASSET.SUCCESS_RESPONSE;
+        newModalContent = MODAL_CONTENT.ADD_HOLDING.SUCCESS_RESPONSE;
       } else if (
-        currentModalContent.action === MODAL_CONTENT.UPDATE_ASSET.FORM.action
+        currentModalContent.action === MODAL_CONTENT.UPDATE_HOLDING.FORM.action
       ) {
         const isBuy =
           (form.elements.namedItem("action") as HTMLInputElement).value ===
-          ASSET_FORM_FIELD.BUY_RADIO_BUTTON.value;
-        const userAsset = userPortfolio?.assets.find(
-          (asset) => asset.symbol === symbol
+          HOLDING_FORM_FIELD.BUY_RADIO_BUTTON.value;
+        const userHolding = userPortfolio?.holdings.find(
+          (holding) => holding.symbol === symbol
         );
 
-        if (userAsset) {
-          await updateAsset(userAsset, isBuy, symbol, numShares, pricePerShare);
+        if (userHolding) {
+          await updateHolding(
+            userHolding,
+            isBuy,
+            symbol,
+            numShares,
+            pricePerShare
+          );
         }
 
-        newModalContent = MODAL_CONTENT.UPDATE_ASSET.SUCCESS_RESPONSE;
+        newModalContent = MODAL_CONTENT.UPDATE_HOLDING.SUCCESS_RESPONSE;
       } else if (
-        currentModalContent.action === MODAL_CONTENT.DELETE_ASSET.FORM.action
+        currentModalContent.action === MODAL_CONTENT.DELETE_HOLDING.FORM.action
       ) {
         if (currentModalContent.symbol) {
-          await deleteAsset(currentModalContent.symbol);
+          await deleteHolding(currentModalContent.symbol);
         }
 
-        newModalContent = MODAL_CONTENT.DELETE_ASSET.SUCCESS_RESPONSE;
+        newModalContent = MODAL_CONTENT.DELETE_HOLDING.SUCCESS_RESPONSE;
       }
 
       setUserPortfolio(await getUserPortfolioData());
@@ -132,13 +140,13 @@ const Dashboard: React.FC = () => {
                   : DASHBOARD_HEADER_FIELD.lossLabel
               }`}</span>
             </div>
-            <AssetsTable
+            <HoldingsTable
               setModalContent={setModalContent}
-              userAssets={userPortfolio.assets}
+              userHoldings={userPortfolio.holdings}
             />
-            <AssetsModal
+            <HoldingsModal
               modalContent={modalContent}
-              onSubmit={onSubmitAsset}
+              onSubmit={onSubmitHolding}
               setModalContent={setModalContent}
             />
           </>

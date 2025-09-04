@@ -1,6 +1,6 @@
 @import "../../../scss/base-import";
 
-.assets-table {
+.holdings-table {
   display: flex;
   flex-direction: column;
   width: 95vw !important;
@@ -24,7 +24,7 @@
     font-weight: bold;
   }
 
-  .add-asset-button {
+  .add-holding-button {
     margin-left: auto;
   }
 

@@ -14,7 +14,7 @@ import {
 import { isEmpty } from "lodash";
 import { FIREBASE_COLLECTIONS } from "@/utils/endpoints";
 
-export interface Asset {
+export interface Holding {
   userUid: string;
   symbol: string;
   numShares: number;
@@ -22,7 +22,7 @@ export interface Asset {
   currency: string;
 }
 
-export interface AssetWithQuoteData extends Asset {
+export interface HoldingWithQuoteData extends Holding {
   name: string;
   price: number;
   totalValue: number;
@@ -31,70 +31,72 @@ export interface AssetWithQuoteData extends Asset {
 }
 
 interface PortfolioData {
-  assets: AssetWithQuoteData[];
+  holdings: HoldingWithQuoteData[];
   returnAmount: number;
   returnPct: number;
   totalValue: number;
 }
 
 const getUserPortfolioData = async (): Promise<PortfolioData> => {
-  let userAssetsWithQuoteData: AssetWithQuoteData[];
+  let userHoldingsWithQuoteData: HoldingWithQuoteData[];
 
   try {
-    const userAssets = await getUserAssets();
-    userAssetsWithQuoteData = await getQuoteData(userAssets);
+    const userHoldings = await getUserHoldings();
+    userHoldingsWithQuoteData = await getQuoteData(userHoldings);
   } catch {
-    userAssetsWithQuoteData = [];
+    userHoldingsWithQuoteData = [];
   }
 
   // Calculating the total return response
   let totalValue = 0;
   let totalAmountSpent = 0;
 
-  userAssetsWithQuoteData.forEach((asset) => {
-    totalValue += asset.numShares * asset.price;
-    totalAmountSpent += asset.amountSpent;
+  userHoldingsWithQuoteData.forEach((holding) => {
+    totalValue += holding.numShares * holding.price;
+    totalAmountSpent += holding.amountSpent;
   });
 
   const returnAmount = totalValue - totalAmountSpent;
   const returnPct = (returnAmount / totalValue) * 100;
 
   return {
-    assets: userAssetsWithQuoteData,
+    holdings: userHoldingsWithQuoteData,
     returnAmount,
     returnPct,
     totalValue,
   };
 };
 
-const getUserAssets = async (): Promise<Asset[]> => {
-  const assetsRef = collection(database, FIREBASE_COLLECTIONS.ASSETS);
-  const assetsQuery = query(
-    assetsRef,
+const getUserHoldings = async (): Promise<Holding[]> => {
+  const holdingsRef = collection(database, FIREBASE_COLLECTIONS.HOLDINGS);
+  const holdingsQuery = query(
+    holdingsRef,
     where("userUid", "==", auth.currentUser?.uid),
     orderBy("symbol", "asc")
   );
-  const querySnapshot = await getDocs(assetsQuery);
+  const querySnapshot = await getDocs(holdingsQuery);
 
   return querySnapshot.docs.map(
-    (doc: QueryDocumentSnapshot) => doc.data() as Asset
+    (doc: QueryDocumentSnapshot) => doc.data() as Holding
   );
 };
 
-const getQuoteData = async (assets: Asset[]): Promise<AssetWithQuoteData[]> => {
+const getQuoteData = async (
+  holdings: Holding[]
+): Promise<HoldingWithQuoteData[]> => {
   return await Promise.all(
-    assets.map(async (asset) => {
+    holdings.map(async (holding) => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_ENDPOINT}?symbol=${asset.symbol}&apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
+        `${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_ENDPOINT}?symbol=${holding.symbol}&apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
       );
       const quote = await response.json();
       const price = quote[0].price as number;
-      const totalValue = asset.numShares * price;
-      const returnAmount = totalValue - asset.amountSpent;
+      const totalValue = holding.numShares * price;
+      const returnAmount = totalValue - holding.amountSpent;
       const returnPct = (returnAmount / totalValue) * 100;
 
       return {
-        ...asset,
+        ...holding,
         name: quote[0].name as string,
         price,
         totalValue,
@@ -105,33 +107,33 @@ const getQuoteData = async (assets: Asset[]): Promise<AssetWithQuoteData[]> => {
   );
 };
 
-const addAsset = async (
-  userAssetHoldings: string[],
+const addHolding = async (
+  userHoldingHoldings: string[],
   symbol: string,
   numShares: number,
   pricePerShare: number
 ): Promise<void> => {
-  if (userAssetHoldings.includes(symbol)) {
-    throw new Error("Asset already exists in your portfolio.");
-  } else if (await verifyAssetSymbol(symbol)) {
-    const assetDocRef = doc(
+  if (userHoldingHoldings.includes(symbol)) {
+    throw new Error("Holding already exists in your portfolio.");
+  } else if (await verifyHoldingSymbol(symbol)) {
+    const holdingDocRef = doc(
       database,
-      FIREBASE_COLLECTIONS.ASSETS,
+      FIREBASE_COLLECTIONS.HOLDINGS,
       `${auth.currentUser?.uid}-${symbol}`
     );
-    await setDoc(assetDocRef, {
+    await setDoc(holdingDocRef, {
       amountSpent: numShares * pricePerShare,
       currency: "USD",
       numShares,
       symbol,
       userUid: auth.currentUser?.uid,
-    } as Asset);
+    } as Holding);
   } else {
-    throw new Error("Asset could not be found.");
+    throw new Error("Holding could not be found.");
   }
 };
 
-const verifyAssetSymbol = async (symbol: string): Promise<boolean> => {
+const verifyHoldingSymbol = async (symbol: string): Promise<boolean> => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_ENDPOINT}?symbol=${symbol}&apikey=${process.env.NEXT_PUBLIC_FINANCIAL_MODELING_PREP_API_KEY}`
   );
@@ -141,42 +143,42 @@ const verifyAssetSymbol = async (symbol: string): Promise<boolean> => {
   );
 };
 
-const updateAsset = async (
-  assetData: Asset,
+const updateHolding = async (
+  holdingData: Holding,
   isBuy: boolean,
   symbol: string,
   numShares: number,
   pricePerShare: number
 ): Promise<void> => {
-  const assetDocRef = doc(
+  const holdingDocRef = doc(
     database,
-    FIREBASE_COLLECTIONS.ASSETS,
+    FIREBASE_COLLECTIONS.HOLDINGS,
     `${auth.currentUser?.uid}-${symbol}`
   );
 
-  if (!isBuy && numShares > assetData.numShares) {
+  if (!isBuy && numShares > holdingData.numShares) {
     throw new Error("Cannot sell more shares than you own.");
-  } else if (!isBuy && numShares === assetData.numShares) {
-    await deleteAsset(symbol);
+  } else if (!isBuy && numShares === holdingData.numShares) {
+    await deleteHolding(symbol);
   } else {
-    await updateDoc(assetDocRef, {
+    await updateDoc(holdingDocRef, {
       amountSpent: isBuy
-        ? assetData.amountSpent + numShares * pricePerShare
-        : assetData.amountSpent - numShares * pricePerShare,
+        ? holdingData.amountSpent + numShares * pricePerShare
+        : holdingData.amountSpent - numShares * pricePerShare,
       numShares: isBuy
-        ? assetData.numShares + numShares
-        : assetData.numShares - numShares,
+        ? holdingData.numShares + numShares
+        : holdingData.numShares - numShares,
     });
   }
 };
 
-const deleteAsset = async (symbol: string): Promise<void> => {
-  const assetDocRef = doc(
+const deleteHolding = async (symbol: string): Promise<void> => {
+  const holdingDocRef = doc(
     database,
-    FIREBASE_COLLECTIONS.ASSETS,
+    FIREBASE_COLLECTIONS.HOLDINGS,
     `${auth.currentUser?.uid}-${symbol}`
   );
-  await deleteDoc(assetDocRef);
+  await deleteDoc(holdingDocRef);
 };
 
-export { addAsset, updateAsset, deleteAsset, getUserPortfolioData };
+export { addHolding, updateHolding, deleteHolding, getUserPortfolioData };

@@ -2,8 +2,8 @@ import React from "react";
 import { isEmpty } from "lodash";
 import { Form, InputGroup } from "react-bootstrap";
 import Modal from "@/app/components/Modal";
-import { ASSET_FORM_FIELD, MODAL_CONTENT } from "../constants";
-import "./AssetsModal.scss";
+import { HOLDING_FORM_FIELD, MODAL_CONTENT } from "../constants";
+import "./HoldingsModal.scss";
 
 export interface ModalContent {
   action?: string;
@@ -13,13 +13,13 @@ export interface ModalContent {
   title?: string;
 }
 
-interface AssetsModalProps {
+interface HoldingsModalProps {
   modalContent: ModalContent;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   setModalContent: React.Dispatch<React.SetStateAction<ModalContent>>;
 }
 
-const AssetsModal: React.FC<AssetsModalProps> = ({
+const HoldingsModal: React.FC<HoldingsModalProps> = ({
   modalContent,
   onSubmit,
   setModalContent,
@@ -29,7 +29,7 @@ const AssetsModal: React.FC<AssetsModalProps> = ({
       <Modal
         buttonAttributes={{
           ...(modalContent.action
-            ? { form: "asset-form", type: "submit" }
+            ? { form: "holding-form", type: "submit" }
             : {
                 onClick: () => {
                   setModalContent({});
@@ -44,30 +44,34 @@ const AssetsModal: React.FC<AssetsModalProps> = ({
         title={modalContent.title}
       >
         {modalContent.action ? (
-          <Form className="assets-modal" id="asset-form" onSubmit={onSubmit}>
+          <Form
+            className="holdings-modal"
+            id="holding-form"
+            onSubmit={onSubmit}
+          >
             {modalContent.body || (
               <div className="form">
                 {modalContent.action ===
-                  MODAL_CONTENT.UPDATE_ASSET.FORM.action && (
+                  MODAL_CONTENT.UPDATE_HOLDING.FORM.action && (
                   <div className="form-radio-button-group">
                     <Form.Check
-                      {...ASSET_FORM_FIELD.BUY_RADIO_BUTTON}
+                      {...HOLDING_FORM_FIELD.BUY_RADIO_BUTTON}
                       inline
                       required
                     />
                     <Form.Check
-                      {...ASSET_FORM_FIELD.SELL_RADIO_BUTTON}
+                      {...HOLDING_FORM_FIELD.SELL_RADIO_BUTTON}
                       inline
                       required
                     />
                   </div>
                 )}
                 <Form.Control
-                  {...ASSET_FORM_FIELD.SYMBOL_INPUT}
+                  {...HOLDING_FORM_FIELD.SYMBOL_INPUT}
                   className="form-input"
                   disabled={
                     modalContent.action ===
-                    MODAL_CONTENT.UPDATE_ASSET.FORM.action
+                    MODAL_CONTENT.UPDATE_HOLDING.FORM.action
                   }
                   onInput={(event: React.FormEvent<HTMLInputElement>) =>
                     (event.currentTarget.value = (
@@ -76,31 +80,31 @@ const AssetsModal: React.FC<AssetsModalProps> = ({
                   }
                   readOnly={
                     modalContent.action ===
-                    MODAL_CONTENT.UPDATE_ASSET.FORM.action
+                    MODAL_CONTENT.UPDATE_HOLDING.FORM.action
                   }
                   required
                   value={
                     modalContent.action ===
-                    MODAL_CONTENT.UPDATE_ASSET.FORM.action
+                    MODAL_CONTENT.UPDATE_HOLDING.FORM.action
                       ? modalContent.symbol
                       : undefined
                   }
                 />
                 <InputGroup className="form-input">
                   <Form.Control
-                    {...ASSET_FORM_FIELD.NUM_SHARES_INPUT}
+                    {...HOLDING_FORM_FIELD.NUM_SHARES_INPUT}
                     required
                   />
                   <InputGroup.Text>
-                    {ASSET_FORM_FIELD.NUM_SHARES_INPUT.suffix}
+                    {HOLDING_FORM_FIELD.NUM_SHARES_INPUT.suffix}
                   </InputGroup.Text>
                 </InputGroup>
                 <InputGroup className="form-input">
                   <InputGroup.Text>
-                    {ASSET_FORM_FIELD.PRICE_PER_SHARE_INPUT.prefix}
+                    {HOLDING_FORM_FIELD.PRICE_PER_SHARE_INPUT.prefix}
                   </InputGroup.Text>
                   <Form.Control
-                    {...ASSET_FORM_FIELD.PRICE_PER_SHARE_INPUT}
+                    {...HOLDING_FORM_FIELD.PRICE_PER_SHARE_INPUT}
                     required
                   />
                 </InputGroup>
@@ -115,4 +119,4 @@ const AssetsModal: React.FC<AssetsModalProps> = ({
   );
 };
 
-export default AssetsModal;
+export default HoldingsModal;

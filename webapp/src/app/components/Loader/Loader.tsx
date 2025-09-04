@@ -1,7 +1,7 @@
-import React from 'react';
-import { Spinner } from 'react-bootstrap';
+import React from "react";
+import { Spinner } from "react-bootstrap";
 
-import './Loader.scss';
+import "./Loader.scss";
 
 interface LoaderProps {
   isVisible?: boolean;
@@ -9,8 +9,8 @@ interface LoaderProps {
 
 const Loader: React.FC<LoaderProps> = ({ isVisible = true }) =>
   isVisible ? (
-    <div className='loader'>
-      <Spinner animation='border' className='spinner' variant='light' />
+    <div className="loader">
+      <Spinner animation="border" className="spinner" variant="light" />
     </div>
   ) : null;
 

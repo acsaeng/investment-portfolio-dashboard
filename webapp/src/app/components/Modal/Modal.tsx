@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
-import { Button, Modal as BootstrapModal } from 'react-bootstrap';
+import React, { ReactNode } from "react";
+import { Button, Modal as BootstrapModal } from "react-bootstrap";
 
 interface ModalProps {
   buttonAttributes?: React.ComponentProps<typeof Button>;
@@ -13,14 +13,20 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({
   buttonAttributes = {},
-  buttonLabel = '',
+  buttonLabel = "",
   children,
   closeButton = false,
   isVisible = true,
   onHide = () => {},
-  title = '',
+  title = "",
 }) => (
-  <BootstrapModal backdrop='static' className='modal' centered onHide={onHide} show={isVisible}>
+  <BootstrapModal
+    backdrop="static"
+    className="modal"
+    centered
+    onHide={onHide}
+    show={isVisible}
+  >
     {(title || closeButton) && (
       <BootstrapModal.Header closeButton={closeButton}>
         <BootstrapModal.Title>{title}</BootstrapModal.Title>

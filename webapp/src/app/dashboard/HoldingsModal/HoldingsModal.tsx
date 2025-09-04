@@ -5,7 +5,7 @@ import Modal from "@/app/components/Modal";
 import { HOLDING_FORM_FIELD, MODAL_CONTENT } from "../constants";
 import "./HoldingsModal.scss";
 
-export interface ModalContent {
+export interface HoldingsModalContent {
   action?: string;
   body?: React.ReactNode;
   buttonLabel?: string;
@@ -14,9 +14,9 @@ export interface ModalContent {
 }
 
 interface HoldingsModalProps {
-  modalContent: ModalContent;
+  modalContent: HoldingsModalContent;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  setModalContent: React.Dispatch<React.SetStateAction<ModalContent>>;
+  setModalContent: React.Dispatch<React.SetStateAction<HoldingsModalContent>>;
 }
 
 const HoldingsModal: React.FC<HoldingsModalProps> = ({

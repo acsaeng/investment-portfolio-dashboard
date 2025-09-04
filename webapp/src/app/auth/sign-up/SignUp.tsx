@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { isEmpty } from 'lodash';
-import { Button, Form } from 'react-bootstrap';
-import Loader from '@/app/components/Loader/Loader';
-import Modal from '@/app/components/Modal';
-import { signOutUser, signUpUser } from '@/api/auth';
-import PAGE from '@/utils/routes';
-import { FORM_FIELD, FORM_LABEL, MODAL_LABEL } from './constants';
-import './SignUp.scss';
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { isEmpty } from "lodash";
+import { Button, Form } from "react-bootstrap";
+import Loader from "@/app/components/Loader/Loader";
+import Modal from "@/app/components/Modal";
+import { signOutUser, signUpUser } from "@/api/auth";
+import PAGE from "@/utils/routes";
+import { FORM_FIELD, FORM_LABEL, MODAL_LABEL } from "./constants";
+import "./SignUp.scss";
 
-interface ModalContent {
+interface SignUpModalContent {
   title?: string;
   body?: string;
   button?: string;
@@ -22,7 +22,7 @@ interface ModalContent {
 
 const SignUp: React.FC = () => {
   const [showLoader, setShowLoader] = useState(false);
-  const [modalContent, setModalContent] = useState<ModalContent>({});
+  const [modalContent, setModalContent] = useState<SignUpModalContent>({});
   const router = useRouter();
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -30,12 +30,12 @@ const SignUp: React.FC = () => {
     setShowLoader(true);
 
     const formData = new FormData(event.currentTarget);
-    const firstName = formData.get('firstName') as string;
-    const lastName = formData.get('lastName') as string;
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-    const dob = formData.get('dob') as string;
-    const gender = formData.get('gender') as string;
+    const firstName = formData.get("firstName") as string;
+    const lastName = formData.get("lastName") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const dob = formData.get("dob") as string;
+    const gender = formData.get("gender") as string;
 
     try {
       await signUpUser(firstName, lastName, email, password, dob, gender);
@@ -47,9 +47,12 @@ const SignUp: React.FC = () => {
       });
     } catch (error: any) {
       const errorMessage = error.message
-        .substring(error.message.indexOf('/') + 1, error.message.lastIndexOf(')'))
-        .replaceAll('-', ' ');
-      
+        .substring(
+          error.message.indexOf("/") + 1,
+          error.message.lastIndexOf(")")
+        )
+        .replaceAll("-", " ");
+
       setModalContent({
         title: MODAL_LABEL.ERROR.TITLE,
         body: errorMessage
@@ -78,13 +81,37 @@ const SignUp: React.FC = () => {
         <h6 className="header">{FORM_LABEL.FORM_HEADER}</h6>
         <Form className="form" onSubmit={onSubmit}>
           <div className="name-inputs-container">
-            <Form.Control {...FORM_FIELD.FIRST_NAME_INPUT} className="first-name-input" required />
-            <Form.Control {...FORM_FIELD.LAST_NAME_INPUT} className="last-name-input" required />
+            <Form.Control
+              {...FORM_FIELD.FIRST_NAME_INPUT}
+              className="first-name-input"
+              required
+            />
+            <Form.Control
+              {...FORM_FIELD.LAST_NAME_INPUT}
+              className="last-name-input"
+              required
+            />
           </div>
-          <Form.Control {...FORM_FIELD.EMAIL_INPUT} className="email-input" required />
-          <Form.Control {...FORM_FIELD.PASSWORD_INPUT} className="password-input" required />
-          <Form.Control {...FORM_FIELD.DOB_INPUT} className="dob-input" required />
-          <Form.Select {...FORM_FIELD.GENDER_SELECT} className="gender-input" required>
+          <Form.Control
+            {...FORM_FIELD.EMAIL_INPUT}
+            className="email-input"
+            required
+          />
+          <Form.Control
+            {...FORM_FIELD.PASSWORD_INPUT}
+            className="password-input"
+            required
+          />
+          <Form.Control
+            {...FORM_FIELD.DOB_INPUT}
+            className="dob-input"
+            required
+          />
+          <Form.Select
+            {...FORM_FIELD.GENDER_SELECT}
+            className="gender-input"
+            required
+          >
             {FORM_FIELD.GENDER_SELECT.options.map((gender) => (
               <option key={gender} value={gender}>
                 {gender}

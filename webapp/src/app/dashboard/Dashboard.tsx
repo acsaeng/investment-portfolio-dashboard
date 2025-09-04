@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/config/firebase";
 import HoldingsModal from "./HoldingsModal";
-import { ModalContent } from "./HoldingsModal/HoldingsModal";
+import { HoldingsModalContent } from "./HoldingsModal/HoldingsModal";
 import HoldingsTable from "./HoldingsTable";
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
   const [userPortfolio, setUserPortfolio] = useState<UserPortfolio | null>(
     null
   );
-  const [modalContent, setModalContent] = useState<ModalContent>({});
+  const [modalContent, setModalContent] = useState<HoldingsModalContent>({});
   const [showLoader, setShowLoader] = useState(false);
   const router = useRouter();
 
@@ -45,7 +45,7 @@ const Dashboard: React.FC = () => {
     event.preventDefault();
     const form = event.currentTarget;
     const currentModalContent = modalContent;
-    let newModalContent: ModalContent = {};
+    let newModalContent: HoldingsModalContent = {};
 
     setModalContent({});
     setShowLoader(true);

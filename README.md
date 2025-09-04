@@ -4,7 +4,7 @@
 
 ## Summary
 
-A web application designed to help you keep track of your investments. The dashboard allow you to view the value of you assets in real-time, as well as the ability to add, update, and delete assets in order to keep your portfolio up to date.
+A web application designed to help you keep track of your investments. The dashboard allow you to view the value of your holdings in real-time, as well as the ability to add, update, and delete holdings in order to keep your portfolio up to date.
 
 To run the application:
 

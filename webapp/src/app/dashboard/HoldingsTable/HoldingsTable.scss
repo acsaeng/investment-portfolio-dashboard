@@ -25,7 +25,13 @@
   }
 
   .add-holding-button {
+    background: goldenrod;
     margin-left: auto;
+    border: none;
+
+    &:hover {
+      background: goldenrod;
+    }
   }
 
   .heading {
@@ -60,7 +66,13 @@
   }
 
   .action-button {
+    background: goldenrod;
     margin: 2px 0;
+    border: none;
+
+    &:hover {
+      background: goldenrod;
+    }
 
     @include media-breakpoint-up(md) {
       margin: 0 2px;

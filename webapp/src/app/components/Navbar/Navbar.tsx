@@ -1,10 +1,12 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Container, Navbar as BootstrapNavbar } from "react-bootstrap";
 import { signOutUser } from "@/api/auth";
 import PAGE from "@/utils/routes";
-import { COMPANY_NAME, SIGN_OUT_LINK_LABEL } from "./constants";
+import CompanyWordmark from "../../../img/wordmark.png";
+import { SIGN_OUT_LINK_LABEL, WORDMARK_IMAGE_ALT } from "./constants";
 import "./Navbar.scss";
 
 const Navbar: React.FC = () => {
@@ -19,7 +21,14 @@ const Navbar: React.FC = () => {
     <BootstrapNavbar className="navbar">
       <Container>
         <BootstrapNavbar.Brand className="brand" href={PAGE.DASHBOARD}>
-          {COMPANY_NAME}
+          <Image
+            alt={WORDMARK_IMAGE_ALT}
+            className="logo"
+            height={25}
+            placeholder="blur"
+            quality={100}
+            src={CompanyWordmark}
+          />
         </BootstrapNavbar.Brand>
         <BootstrapNavbar.Toggle />
         <BootstrapNavbar.Collapse className="collapse">

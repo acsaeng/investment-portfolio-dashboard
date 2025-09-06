@@ -1,4 +1,4 @@
-const COMPANY_NAME = "Wealtheasy";
+const WORDMARK_IMAGE_ALT = "Fortunebasic wordmark";
 const SIGN_OUT_LINK_LABEL = "Sign out";
 
-export { COMPANY_NAME, SIGN_OUT_LINK_LABEL };
+export { SIGN_OUT_LINK_LABEL, WORDMARK_IMAGE_ALT };

@@ -9,7 +9,7 @@ import Loader from "@/app/components/Loader";
 import { signInUser, signOutUser } from "@/api/auth";
 import Modal from "@/app/components/Modal";
 import PAGE from "@/utils/routes";
-import CompanyLogo from "../../../img/logo.jpg";
+import CompanyLogo from "../../../img/logo.png";
 import {
   FORM_FIELD,
   FORM_LABEL,

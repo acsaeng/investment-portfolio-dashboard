@@ -1,4 +1,4 @@
-const LOGO_IMAGE_ALT = "Company logo";
+const LOGO_IMAGE_ALT = "Fortunebasic logo";
 
 const FORM_LABEL = {
   FORM_HEADER: "Enter your email address below",

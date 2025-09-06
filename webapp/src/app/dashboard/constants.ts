@@ -51,7 +51,7 @@ const MODAL_CONTENT = {
     FORM: {
       action: "delete-holding",
       title: "Delete holding",
-      body: "Click 'Confirm' if you wish to delete this holding",
+      body: "Please confirm if you wish to delete this holding.",
       buttonLabel: "Confirm",
     },
     SUCCESS_RESPONSE: {

@@ -3,9 +3,19 @@
 .navbar {
   width: 100%;
   margin-bottom: 20px;
-  background-color: lightgrey;
+  background: black;
 
   .collapse {
     justify-content: end;
+  }
+
+  .sign-out-link {
+    color: lightgray;
+    text-decoration: none;
+
+    &:hover {
+      color: lightgray;
+      text-decoration: underline;
+    }
   }
 }

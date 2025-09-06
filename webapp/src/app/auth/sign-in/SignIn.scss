@@ -14,7 +14,7 @@
     max-width: 95%;
     align-items: center;
     padding: 20px 30px 40px;
-    background: lightgrey;
+    background: black;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
@@ -31,6 +31,7 @@
 
   .title {
     margin-bottom: 30px;
+    color: lightgray;
   }
 
   .form {
@@ -51,6 +52,7 @@
   }
 
   .account-link {
+    color: goldenrod;
     text-decoration: none;
 
     &:hover {
@@ -60,7 +62,7 @@
 
   .delimiter {
     margin: 0 5px;
-    color: darkgrey;
+    color: lightgray;
     font-weight: 700;
 
     @include media-breakpoint-up(md) {
@@ -69,6 +71,8 @@
   }
 
   .sign-in-button {
+    background: goldenrod;
     margin-left: auto;
+    color: black;
   }
 }

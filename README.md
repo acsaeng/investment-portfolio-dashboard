@@ -4,14 +4,37 @@
 
 ## Summary
 
-A web application designed to help you keep track of your investments. The dashboard allow you to view the value of your holdings in real-time, as well as the ability to add, update, and delete holdings in order to keep your portfolio up to date.
+A web application designed using React, Firebase (authentication and Firestore database), and Docker to help users keep track of their personal investments. The dashboard allows users to view the value of their individual and total investments in real-time, including the ability to add, update, and delete holdings in order to keep their portfolio up to date.
 
-To run the application:
+<table align="center">
+  <tbody>
+    <tr align="center">
+      <th width="30%">Sign In Page</th>
+    </tr>
+    <tr align="center">
+      <td><img width="500" alt="Payments tab" src="./img/sign-in-page.png" /></td>
+    </tr>
+  </tbody>
+</table>
 
-- Create a new Firebase project
-- Add your Firebase SDK configuration parameters in `src/config/firebase.js`
-- Add the required API keys in the `.env` file
-- Ensure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed on your device
-- Build and run the containers by executing the `docker-compose up` command
-- Access http://localhost:3000 in the browser
-- Stop the containers by executing the `docker-compose down` command once finished
+<table align="center">
+  <tbody>
+    <tr align="center">
+      <th width="30%">Dashboard Page</th>
+    </tr>
+    <tr align="center">
+      <td><img width="500" alt="Payments tab" src="./img/dashboard-page.png" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<table align="center">
+  <tbody>
+    <tr align="center">
+      <th width="30%">Add Holding Modal</th>
+    </tr>
+    <tr align="center">
+      <td><img width="500" alt="Payments tab" src="./img/add-holding-modal.png" /></td>
+    </tr>
+  </tbody>
+</table>

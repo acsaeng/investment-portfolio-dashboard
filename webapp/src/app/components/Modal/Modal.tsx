@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { Button, Modal as BootstrapModal } from "react-bootstrap";
+import "./Modal.scss";
 
 interface ModalProps {
   buttonAttributes?: React.ComponentProps<typeof Button>;
@@ -35,7 +36,9 @@ const Modal: React.FC<ModalProps> = ({
     <BootstrapModal.Body>{children}</BootstrapModal.Body>
     {buttonLabel && (
       <BootstrapModal.Footer>
-        <Button {...buttonAttributes}>{buttonLabel}</Button>
+        <Button {...buttonAttributes} className="button">
+          {buttonLabel}
+        </Button>
       </BootstrapModal.Footer>
     )}
   </BootstrapModal>

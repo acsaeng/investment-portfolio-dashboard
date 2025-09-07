@@ -29,8 +29,8 @@
     margin-left: auto;
     border: none;
 
-    &:hover,
-    &:active {
+    &:active,
+    &:hover {
       background: goldenrod !important;
     }
   }
@@ -71,8 +71,8 @@
     margin: 2px 0;
     border: none;
 
-    &:hover,
-    &:active {
+    &:active,
+    &:hover {
       background: goldenrod !important;
     }
 

@@ -8,10 +8,10 @@ A web application designed using React, Firebase (authentication and Firestore d
 
 <table align="center">
   <tbody>
-    <tr align="center">
-      <th width="30%">Sign In</th>
+    <tr>
+      <th>Sign In</th>
     </tr>
-    <tr align="center">
+    <tr>
       <td><img width="500" alt="Payments tab" src="./img/sign-in-page.png" /></td>
     </tr>
   </tbody>
@@ -19,10 +19,10 @@ A web application designed using React, Firebase (authentication and Firestore d
 
 <table align="center">
   <tbody>
-    <tr align="center">
-      <th width="30%">Dashboard</th>
+    <tr>
+      <th>Dashboard</th>
     </tr>
-    <tr align="center">
+    <tr>
       <td><img width="500" alt="Payments tab" src="./img/dashboard-page.png" /></td>
     </tr>
   </tbody>
@@ -30,10 +30,10 @@ A web application designed using React, Firebase (authentication and Firestore d
 
 <table align="center">
   <tbody>
-    <tr align="center">
-      <th width="30%">Add Holdings</th>
+    <tr>
+      <th>Add Holdings</th>
     </tr>
-    <tr align="center">
+    <tr>
       <td><img width="500" alt="Payments tab" src="./img/add-holding-modal.png" /></td>
     </tr>
   </tbody>

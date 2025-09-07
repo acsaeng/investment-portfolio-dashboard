@@ -29,8 +29,9 @@
     margin-left: auto;
     border: none;
 
-    &:hover {
-      background: goldenrod;
+    &:hover,
+    &:active {
+      background: goldenrod !important;
     }
   }
 
@@ -70,8 +71,9 @@
     margin: 2px 0;
     border: none;
 
-    &:hover {
-      background: goldenrod;
+    &:hover,
+    &:active {
+      background: goldenrod !important;
     }
 
     @include media-breakpoint-up(md) {

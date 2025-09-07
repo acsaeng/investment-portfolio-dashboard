@@ -87,5 +87,10 @@
     margin-left: auto;
     color: black;
     border: none;
+
+    &:active {
+      background: goldenrod;
+      color: black;
+    }
   }
 }

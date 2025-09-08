@@ -1,10 +1,10 @@
 # Investment Portfolio Dashboard
 
-**Author:** Aron Saengchan
-
 ## Summary
 
 A web application designed using React, Firebase (authentication and Firestore database), and Docker to help users keep track of their personal investments. The dashboard allows users to view the value of their individual and total investments in real-time, including the ability to add, update, and delete holdings in order to keep their portfolio up to date.
+
+## Images
 
 <table align="center">
   <tbody>
